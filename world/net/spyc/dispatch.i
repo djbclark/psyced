@@ -234,12 +234,16 @@ void dispatch(mapping rvars, mapping evars, mixed method, mixed body) {
 	    string source;
 	    mixed target;
 	    if (!vars["_source"]) {
+#if 0
 		// FIXME: where to set netloc in active
 		if (!netloc) { // set in sender after _request_features
 		    // FIXME: this is wrong
 		    DISPATCHERROR("Did you forget to request circuit features?");
 		}
 		source = netloc; 
+#else
+		source = netloc || query_ip_name(ME); 
+#endif
 	    } else {
 		// FIXME: a macro NORMALIZE_UNIFORM that may do lower_case please
 		// 		not a simple lower_case
