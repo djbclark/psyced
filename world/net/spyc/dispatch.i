@@ -38,11 +38,7 @@ mixed process_routing_modifiers(mapping rvars, mapping vars) {
 mixed process_entity_modifiers(mapping evars, mapping vars, mapping cstate) {
     // apply evars to context state
     foreach (mixed vname : m_indices(evars)) {
-	if (routing[vname] || abbrev("_INTERNAL", vname)
-#ifndef LIBPSYC
-	    || !legal_keyword(vname)
-#endif
-	    ) {
+	if (routing[vname] || abbrev("_INTERNAL", vname)) {
 	    DISPATCHERROR("illegal varname in entity header")
 	}
 
@@ -107,32 +103,6 @@ mixed process_var_types(mapping evars) {
 	    if (!legal_name(evars[vname]))
 		croak("_error_illegal_nick");
 	    break;
-#ifndef LIBPSYC
-	case "_degree":
-	    // only honour the first digit
-	    if (strlen(evars[vname]) && evars[vname][0] >= '0' && evars[vname][0] <= '9')
-		evars[vname] = evars[vname][0] - '0';
-	    else {
-		PT(("type parser _degree: could not handle value %O\n",
-		    evars[vname]))
-		evars[vname] = 0;
-	    }
-	    break;
-	case "_date":
-	    evars[vname] = to_int(evars[vname]) + PSYC_EPOCH;
-	    break;
-	case "_time":
-	case "_amount":
-	    evars[vname] = to_int(evars[vname]);
-	    break;
-	case "_list":
-	    mixed plist = list_parse(evars[vname]);
-	    if (plist == -1) {
-		DISPATCHERROR("could not parse list");
-	    }
-	    evars[vname] = plist;
-	    break;
-#endif
 	PSYC_SLICE_AND_REPEAT
 	}
     }
@@ -172,11 +142,6 @@ void dispatch(mapping rvars, mapping evars, mixed method, mixed body) {
 
     if (!process_routing_modifiers(rvars, vars))
 	return;
-
-#ifndef LIBPSYC
-    if (!process_var_types(evars))
-	return;
-#endif
 
     // check that _target is hosted by us
     // this check can be skipped if _target is not set

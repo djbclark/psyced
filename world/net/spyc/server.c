@@ -4,7 +4,6 @@
 // the thing that answers on port 4404 of psyced.
 
 #include "psyc.h"
-#ifdef LIBPSYC
 
 #include <net.h>
 #include <services.h>
@@ -201,4 +200,3 @@ int logon(int nothing) {
 	return 1;   // success
 }
 
-#endif // LIBPSYC

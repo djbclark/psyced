@@ -38,6 +38,10 @@ ________________________________________________________________________
 ________________________________________________________________________
 == desperate, but not serious ==========================================
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+- _message_echo_private should display full origin to make fakes recognizable
+  (or we should check lastlog to see when an echo is fake)
+    Du sagst [_nick_target]: hallo alda	    <- not so neat.
+
 - check in user:input() if data is in utf8 (using RE_UTF8) in order to produce
   proper error messages before it is processed further and may end up in
   net/jabber's emit() where it is dropped silently (see CHARS_XMPP.log)

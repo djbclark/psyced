@@ -2,7 +2,6 @@
 // $Id: circuit.c,v 1.38 2008/10/14 19:02:29 lynx Exp $
 
 #include "psyc.h"
-#ifdef LIBPSYC
 
 #include <net.h>
 #include <uniform.h>
@@ -276,4 +275,3 @@ varargs int msg(string source, string mc, string data,
     return emit(buf);
 }
 
-#endif // LIBPSYC
