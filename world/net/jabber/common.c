@@ -51,7 +51,7 @@ int emit(string message) {
 	string t, err;
 	// according to http://www.w3.org/TR/xml/#charsets
 	// remove illegal unicode chars --// thx elmex
-	err = catch(t = regreplace(message, "[^\\x{9}\\x{A}\\x{D}\\x{20}-\\x{D7FF}\\x{E000}-\\x{FFFD}\\x{10000}-\\x{10FFFFFF}]+", "*", RE_GLOBAL | RE_UTF8); nolog);
+	err = catch(t = regreplace(message, "[^\\x{9}\\x{A}\\x{D}\\x{20}-\\x{D7FF}\\x{E000}-\\x{FFFD}\\x{10000}-\\x{FFFFF}]+", "*", RE_GLOBAL | RE_UTF8); nolog);
 	if (err || t != message) {
 		// Info: Chars filtered to %O. Message was %O.
 		log_file("CHARS_XMPP", "[%s] %O %O %O\n", ctime(),

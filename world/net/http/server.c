@@ -113,12 +113,7 @@ process_header() {
 }
 
 parse_request(input) {
-	P2(("=== HTTP got: %O from %O\n", input, query_ip_name(ME)))
-
-	// reset state. in case we support HTTP/1.1. do we?
-        method = item = url = prot = qs = 0;
-        headers = ([]);
-	body = "";
+	P0(("=== HTTP got: %O from %O\n", input, query_ip_name(ME)))
 
         if (!input || input=="") {
                 // should return error?
@@ -126,9 +121,14 @@ parse_request(input) {
 	    	// lets just ignore the empty line
                 return 1;
         }
+	// reset state. in case we support HTTP/1.1. do we?
+        method = item = url = prot = qs = 0;
+        headers = ([]);
+	body = "";
+
 	input = explode(input, " ");
 	switch(sizeof(input)) {
-	default:
+	case 3:
 		prot = input[2];
 		next_input_to(#'parse_header);
 	case 2:
@@ -140,12 +140,18 @@ parse_request(input) {
 		unless (sscanf(url, "%s?%s", item, qs)) item = url;
 		method = lower_case(input[0]);
 		break;
-	case 1:
-                // should return error!
-		quit();
+	default:
+		http_error(prot, R_BADREQUEST,
+		    "invalid "+HTTP_SVERS+" request");
+		quit(); return 1;
 	}
 	P4(("=== HTTP user requested url: %O\n", url))
 	if (method == "connect") next_input_to(#'parse_wait);
+	else if (!sizeof(url) || url[0] != '/') {
+		http_error(prot, R_BADREQUEST,
+		    "invalid "+HTTP_SVERS+" request");
+		quit(); return 1;
+        }
 	else if (!prot) process();	// HTTP/0.9 has no headers
 	else next_input_to(#'parse_header);
 }

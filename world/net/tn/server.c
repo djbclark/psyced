@@ -10,7 +10,7 @@ qScheme() { return "tn"; }
 
 human(x) {
 	x = lower_case(x);
-	unless (abbrev(x, "yes") || abbrev(x, "ja") || abbrev(x, "si") || abbrev(x, "zes")) {
+	if (!strlen(x) || !(abbrev(x, "yes") || abbrev(x, "ja") || abbrev(x, "si") || abbrev(x, "zes"))) {
 		emit("\nSorry, no other species welcome currently.\n\n");
 	}
 		// now check limits

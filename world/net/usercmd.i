@@ -2035,7 +2035,9 @@ tell(pal, what, palo, how, mc, tv) {
 #ifdef MUDLINK
 	if (pal == "$mud") {
 		unless (objectp(mudlink) && interactive(mudlink)) mudlink(v("mudlink"));
-		if (objectp(mudlink)) mudlink -> send(what +"\n");
+		// we could call 'enqueue' if not interactive yet, but that would
+		// probably be even worse for UX. let's just drop that trigger message.
+		if (objectp(mudlink) && interactive(mudlink)) mudlink -> send(what +"\n");
 		return;
 	}
 #endif // MUDLINK

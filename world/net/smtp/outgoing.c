@@ -1,5 +1,10 @@
 // outgoing mail queue for psyced.
 
+// this has not only been leaking message contents..
+// it is currently spamming previous room visitors (see /route) FIXME!!
+// so we disable it completely for now
+#define OFFLINE
+
 // i *could* rewrite this to use net/spool.c
 // but then i'd have such a mess in my room
 

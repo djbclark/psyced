@@ -136,7 +136,7 @@ static who() {
         mixed idle;
         string desc;
 
-	reply("--- /who of local users of "+ SERVER_UNIFORM);
+	reply("--- /who of visible local users of "+ SERVER_UNIFORM);
 	u = objects_people();
 	all = sizeof(u) < 23;
 	// same code in usercmd.i
