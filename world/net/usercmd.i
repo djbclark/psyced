@@ -143,6 +143,27 @@ input(a, dest) {
 #endif
 }
 
+#define MUDLINK //FIXME
+
+#ifdef MUDLINK
+object mudlink;
+
+mudlink(config) {
+	string connectstring, host; int port;
+	// should have mud nicknames instead, so that charsets, prompts
+	// and login procedures can be automated..
+	if (sscanf(config, "%s %d %s", host, port, connectstring)) {
+		// FIXME L8R:
+		//unless (objectp(mudlink)) mudlink = named_clone(NET_PATH "tn/outgoing", MYNICK);
+		unless (objectp(mudlink)) mudlink = clone_object(NET_PATH "tn/outgoing");
+		if (objectp(mudlink)) mudlink -> config(host, port, connectstring);
+		return 1;
+	}
+	// could produce a dedicated syntax warning here.. default is okay
+	return 0;
+}
+#endif
+
 parsecmd(command, dest) {
 	array(string) args;
 	string a;
@@ -2011,6 +2032,13 @@ tell(pal, what, palo, how, mc, tv) {
 		return;
 	}
 #endif
+#ifdef MUDLINK
+	if (pal == "$mud") {
+		unless (objectp(mudlink) && interactive(mudlink)) mudlink(v("mudlink"));
+		if (objectp(mudlink)) mudlink -> send(what +"\n");
+		return;
+	}
+#endif // MUDLINK
 #ifdef ALIASES
         // this also allows for /alias MEP MunichElectropunk
        deaPal = aliases[lower_case(pal)] || pal;
@@ -2664,6 +2692,7 @@ checkVar(key, value) {
 	string a, b;
 	array(string) t;
 
+	P3(("%O checkVar(%O, %O)\n", ME, key, value))
 	// aliases for variable names
 	switch(key) {
 	case "befehlszeichen":
@@ -2969,6 +2998,12 @@ checkVar(key, value) {
 //	case "popstarfave":
 //	case "musicfave":
 		break;	// always valid
+#ifdef MUDLINK
+	case "mudlink":
+		P0(("mudlink %O\n", value))
+		if (value && !mudlink(value)) value = 0;
+		break;
+#endif
 	case "encoding":
 		key = "charset"; // fall thru
 	case "charset":

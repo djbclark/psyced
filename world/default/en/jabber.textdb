@@ -363,6 +363,11 @@ _notice_typing_active
 _notice_typing_gone
 |<message to='[_INTERNAL_target_jabber]' from='[_INTERNAL_source_jabber]'><gone xmlns='http://jabber.org/protocol/chatstates'/></message>
 
+_notice_telnet_verbatim
+|<message from='[_INTERNAL_source_jabber_bare]' to='[_INTERNAL_target_jabber]' type='groupchat'>
+|	<body>[_text_verbatim]</body>
+|</message>
+
 _notice_place
 |<message from='[_INTERNAL_source_jabber_bare]' to='[_INTERNAL_target_jabber]' type='groupchat'>
 |	<body>[_data]</body>
