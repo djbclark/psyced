@@ -613,7 +613,7 @@ X
 # TODO: generate a psyced.gdb file kind of like this
 	print <<X if 0;
 file /bin/psyclpc
-run -DDEBUG=1 -u 4404 4404 2323 6667 5222 9999 etc. whatever flags necessary
+run -DDEBUG=1 -u 4404 4404 2323 6667 5222 6697 etc. whatever flags necessary
 X
 
 # PSYCED INIT.D SCRIPT
