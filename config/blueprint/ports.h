@@ -14,7 +14,7 @@
 #define	HTTPS_PORT	34443
 
 #define	IRC_PORT	6667
-#define	IRCS_PORT	9999
+#define	IRCS_PORT	6697
 
 #define	JABBER_PORT	5222
 #define	JABBERS_PORT	5223

@@ -1570,6 +1570,23 @@ ________________________________________________________________________
   (later people called this technique 'CERTIFICATE PINNING')
 
 == PSYC CLIENTS ========================================================
+
+- PSYC clients are currently not detected as being secure even if they
+  connect by Tor, TLS or localhost. This is because the net/psyc/user object
+  as such isn't connected and the attempt to find the corresponding circuit
+  opens up the question: what if the user has several clients linked? Does
+  a secure one qualify for the entire user object to be trustworthy? What if
+  there is another client that isn't secure? Possible approach to solve the
+  issue: Disallow any password-protected user to be logged in over insecure 
+  channels at any time. This is probably a good idea anyway as it respects
+  the civil rights of *other* users that interact with this user in the
+  expectation that conversations be private. This has the side effect that 
+  PSYC users are forced to register before entering @welcome, unless we also
+  do the refactoring described in MULTIPLE CLIENT INTERFACES and somehow fix
+  that aspect in the process. Or we just walk through all the links and make
+  sure all of them are secure, but that raises the problem of dealing with a
+  new insecure client connecting.
+
 - tg runs into trouble using _do_enter and _do_leave. apparently the enter-echo
   is not accepted by the UNI and thus does not make it into _list_places
 - _do_leave does not forward the echo from remote places back to the client
@@ -1581,8 +1598,6 @@ ________________________________________________________________________
 
 ? psyc clients haben uferlose idle times
   und sie altern nicht
-
-? cryptochat raum?
 
 ? how to improve _request_store and _retrieve?
   look at http://asg.web.cmu.edu/acap/ for ideas
