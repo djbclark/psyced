@@ -22,10 +22,11 @@
 #
 # psyclpc as obtained from http://lpc.psyc.eu
 driver="psyclpc"
-driverver="20111122"
+driverver="20160417"
+driversha256="ad403ad4243fea52d79b1d89d9ad30e2f6a89b4263cf13f329386d03cb6d4fbf"
 lpcbaseurl="http://www.psyced.org/files/"
-zip="bz2"
-zipcmd="bzip2"
+zip="xz"
+zipcmd="xz"
 
 # useful for debugging - see what files it would produce
 exit="exit 1"
@@ -47,8 +48,14 @@ then
 
 !!${hi} HEY YOU, PORTAGE USER ${lo}!!
 If you are running gentoo/portage you should try out our beautiful ebuilds
-at http://www.psyced.org/files/gentoo.tar.bz2 instead of this installation
-script. Stop it now.
+in the youbroketheinternet-overlay instead of this installation script.
+Stop it now and do this...
+
+torify git clone git://git.cheettyiapsyciew.onion/youbroketheinternet-overlay
+
+or this instead:
+
+git clone git://git.psyced.org/youbroketheinternet-overlay
 
 ${hi}Warning: OLD-SCHOOL install.sh STARTING${lo} ...
 
@@ -193,6 +200,8 @@ if ! test `ls -1 ${driver}-*tar.${zip} 2>/dev/null`
         if wget "${lpcbaseurl}/${driver}-${driverver}.tar.${zip}"
         then
 	    echo "${driver} successfully retrieved."
+	    echo "Expect this checksum:\n\n${driversha256}"
+	    sha256sum ${driver}
 	else
 	    echo "${hi}ATTENTION: Unable to download ${driver}"
 	    echo "${hi}ATTENTION: ${lo}You have no ${driver}-*.tar.${zip} in this directory."
