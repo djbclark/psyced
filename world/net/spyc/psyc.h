@@ -39,7 +39,7 @@
 #define PSYCPARSE_STATE_GREET 3
 
 #define DISPATCHERROR(reason) { \
-    debug_message("SPYC DISPATCH ERROR: " reason);    \
+    debug_message("SPYC DISPATCH ERROR: " reason "\n");    \
     croak("_error_dispatch", "dispatch error: "       \
 	    reason);                                   \
     return;                                           \
