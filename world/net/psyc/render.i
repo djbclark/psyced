@@ -268,6 +268,7 @@ static varargs string render_psyc(mixed source, string mc, mixed data,
 	}
 #endif /* NEW_RENDER */
 
+#ifdef LIBPSYC
 	int routeMe = 0;
 	mapping evars = ([ ]);
 
@@ -286,6 +287,50 @@ static varargs string render_psyc(mixed source, string mc, mixed data,
 	    }
 
 	return psyc_render(({ rvars, evars, mc, data }));
+#else
+
+#if __EFUN_DEFINED__(walk_mapping)
+	// walk_mapping could be rewritten into foreach, but thats work
+	walk_mapping(rvars, #'build_header, rvars, 0);
+#else                            // PIKE, MudOS...
+	mapeach(key, val, rvars) {
+	    build_header(key, val, rvars, 0);
+	}
+#endif
+
+	if (mappingp(vars)) {
+#if 0 //ndef EXPERIMENTAL
+	    if (member(vars, "_count"))
+		ebuf += "\n:_count\t" + vars["_count"];
+#endif
+#if __EFUN_DEFINED__(walk_mapping)
+	    // walk_mapping could be rewritten into foreach, but thats work
+	    walk_mapping(vars, #'build_header, vars, 1);
+#else                            // PIKE, MudOS...
+	    mapeach(key, val, vars) {
+		build_header(key, val, vars, 1);
+	    }
+#endif
+	}
+
+	if (data == "") ebuf += "\n"+ mc;
+	else ebuf += "\n"+ mc + "\n"+ data;
+
+#ifdef SPYC 	// || MODULE_LENGTH
+	if (needLen || strlen(ebuf) + strlen(rbuf) > 555)
+	    return ":_length\t"+ strlen(ebuf) + rbuf +"\n"+
+		ebuf +"\n" S_GLYPH_PACKET_DELIMITER "\n";
+	else
+#endif
+#ifndef NEW_LINE
+	if (excessiveNewline) return rbuf[1 ..] +"\n"+
+		ebuf + S_GLYPH_PACKET_DELIMITER "\n";
+	else
+#endif
+	if (strlen(rbuf)) return rbuf[1 ..] +"\n"+
+		ebuf +"\n" S_GLYPH_PACKET_DELIMITER "\n";
+	return	ebuf +"\n" S_GLYPH_PACKET_DELIMITER "\n";
+#endif
 }
 
 // notice for completeness: the PSYC renderer does not convert_charset
