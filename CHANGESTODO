@@ -2141,31 +2141,6 @@ ________________________________________________________________________
 ? MUDOS-SUPPORT, things tbd:
     - unless (checkVar(&key, &value)) return;
     - psyc/library
-________________________________________________________________________
-> PERLPSYC TODO:
-¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-- FORK
-  - negotiation muss sowohl blocking als auch nonblocking funktionieren. per
-  deliver() call lässt sich das problemlos regeln, nur muss man es coden ,) 
-? merge/borrow with/from http://perlmudclient.sourceforge.net/
-  GNU readline, SSL, MCP editing, ANSI colors, telnet neg + char/fs mode!
-+ MD5 support.. damit wir lpcräume und perlscripte mit einem shared secret
-  konfigurieren können. md5 überprüft dann die legitimität der nachricht.
-  oder wir implementieren das auf serverconnect-ebene.. hmmm
-
-> sonst noch evtl anguckenswert
-+ http://search.cpan.org/~sparsons/Net-Dev-Syslog-0.8.0/Syslog.pm
-+ http://freshmeat.net/projects/yeemp/		GPG over SSL, UTF8 etc.
-? http://freshmeat.net/projects/xchatosd/	X11 OSD hihi
-? http://freshmeat.net/projects/imappserver/	für weitere IM gateways
-  http://freshmeat.net/projects/rss-im/
-
-+ FILE TRANSFER APPS
-  would love to have some commands to send files around.. like a psyc fileshare daemon
-  to run in bg if there is no psycion, a directory to put files for friends in, commands
-  to manually send files to friends or browse their offers or friendcast searches (via
-  the UNI). still my friends need to be able to do all of this with a psyconaut..
- - checkout the fileshare stuff in perlpsyc/bin/
 
 ________________________________________________________________________
 ========================================================================
