@@ -180,7 +180,7 @@ msg(source, mc, data, vars, showingLog, target) {
 		rv["_context_relay"] = vars["_context"];
 		P1(("Invalid route in context: msg(%O, %O, %O, %O, %O) -> %O\n",
 		    source, mc, data, vars, target, rv))
-		D2(( sendmsg(source, "_failure_invalid_route", 0, rv); ))
+		D2( sendmsg(source, "_failure_invalid_route", 0, rv); )
 		return 1;
 	} else {
 		P1(("%O unexpected msg(%O, %O, %O, %O, %O)\n",

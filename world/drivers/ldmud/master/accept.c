@@ -21,9 +21,6 @@
 # define AUTODETECT 1 // use TLS autodetect if libpsyc is available
 #else
 # define AUTODETECT 0
-# ifdef SPYC_PATH
-#  echo libpsyc is not enabled in driver. Using old protocol parser instead.
-# endif
 #endif
 
 volatile int shutdown_in_progress = 0;
