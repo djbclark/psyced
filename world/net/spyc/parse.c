@@ -1,5 +1,4 @@
 // vim:foldmethod=marker:syntax=lpc:noexpandtab
-// $Id: parse.c,v 1.30 2008/12/18 18:16:14 lynx Exp $
 
 #include "psyc.h"
 #ifdef LIBPSYC	// net/spyc currently doesn't work without libpsyc
@@ -12,7 +11,7 @@ private string buffer;
 int state;
 int may_parse_more;
 
-#ifndef LIBPSYC
+#ifndef LIBPSYC // {{{
 private string body_buffer;
 int body_len;
 
@@ -23,7 +22,7 @@ mapping hvars;
 // prototypes
 parse_header();
 buffer_content();
-#endif // LIBPSYC
+#endif // }}} LIBPSYC
 
 // being faded out in favor of regular croak()
 #define PARSEERROR(reason) { \
@@ -46,7 +45,7 @@ step(); // prototype
 // overload this as needed
 varargs mixed croak(string mc, string data, vamapping vars) { return 0; }
 
-#ifndef LIBPSYC
+#ifndef LIBPSYC //{{{
 // reset parser state
 void parser_reset() {
     if (state != PSYCPARSE_STATE_BLOCKED)
@@ -57,13 +56,13 @@ void parser_reset() {
     tvars = ({ });
     hvars = ([ ]);
 }
-#endif
+#endif //}}}
 
 // initialize the parser
 void parser_init() {
-# ifndef LIBPSYC
+# ifndef LIBPSYC //{{{
     parser_reset();
-# endif
+# endif //}}}
     buffer = "";
     state = PSYCPARSE_STATE_GREET; // AFTER reset
 }
@@ -80,9 +79,9 @@ void resume_parse() {
 
 // called when a complete packet has arrived
 void dispatch(mapping rvars, mapping evars, mixed method, mixed body) {
-#ifndef LIBPSYC
+#ifndef LIBPSYC //{{{
     parser_reset();
-#endif
+#endif //}}}
 }
 
 void psyc_dispatch(mixed p) {
@@ -109,13 +108,13 @@ void feed(string data) {
 
     buffer += data;
 
-# ifndef LIBPSYC
+# ifndef LIBPSYC //{{{
     do {
 	may_parse_more = 0;
 	step();
     } while (may_parse_more);
 
-# else
+# else //}}}
     if (state != PSYCPARSE_STATE_HEADER)
 	step();
 
@@ -158,14 +157,14 @@ void step() {
     if (!strlen(buffer))
 	return;
     switch(state) {
-#ifndef LIBPSYC
+#ifndef LIBPSYC //{{{
     case PSYCPARSE_STATE_HEADER:
 	parse_header();
 	break;
     case PSYCPARSE_STATE_CONTENT:
 	buffer_content();
 	break;
-#endif
+#endif //}}}
     case PSYCPARSE_STATE_BLOCKED:
 	// someone requested to stop parsing - e.g. _request_features circuit
 	// message
@@ -177,9 +176,9 @@ void step() {
 	    state = PSYCPARSE_STATE_HEADER;
 	    buffer = buffer[2 ..];
 	    first_response();
-#ifndef LIBPSYC
+#ifndef LIBPSYC //{{{
 	    step();
-#endif
+#endif //}}}
 	} else {
 	    croak("_error_syntax_initialization");
 		// "The new protocol begins with a pipe and a line feed.");
@@ -192,7 +191,7 @@ void step() {
 
 // EOF for LIBPSYC
 
-#ifndef LIBPSYC
+#ifndef LIBPSYC //{{{
 // processes routing header variable assignments
 // basic version does no state
 mapping process_header(mixed varops) {
@@ -478,6 +477,6 @@ test() {
     list_parse("5\tabcde|4\tabcd");
 }
 # endif
-#endif // !LIBPSYC
+#endif // !LIBPSYC //}}}
 
 #endif // LIBPSYC
