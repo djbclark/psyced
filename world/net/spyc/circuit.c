@@ -101,7 +101,7 @@ void sender_verification(string sourcehost, mixed targethost)
 
 // gets called during socket logon
 int logon(int failure) {
-    mixed t;
+    mixed pappnose;
     sAuthHosts(([ ])); // reset authhosts 
     legal_senders = ([ ]);
     instate = ([ "_INTERNAL_origin" : ME ]);
@@ -140,8 +140,8 @@ int logon(int failure) {
     unless(isServer()) {
 	emit("|\n"); // initial greeting
 	if (sizeof(verify_queue)) {
-	    foreach(t : verify_queue) {
-		sender_verification(t[0], t[1]);
+	    foreach(pappnose : verify_queue) {
+		sender_verification(pappnose[0], pappnose[1]);
 	    }
 	    verify_queue = ({ });
 	}

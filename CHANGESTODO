@@ -30,6 +30,11 @@ ________________________________________________________________________
 + clean-up and release the historic webchat code
 	(in case you wondered what browsercap is.. it's there)
 
++ IRC-UX: catch when folks use #notation with native commands
+	  like +sub
+
++ IRC-UX: give users an informational NOTICE when redirecting
+
 == XMPP MUC MOSTLY BROKEN ==============================================
 
     * XMTUX sagt: and these scratchboard-messages and the "going down" messages are sent by this "special user", too
