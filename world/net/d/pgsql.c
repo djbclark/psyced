@@ -1,5 +1,7 @@
 #include <net.h>
 
+#if defined(STORAGE_PGSQL) 
+
 /* 
  * using one database connection is sufficient
  *
@@ -10,10 +12,8 @@
 
 create() {
     int ret;
-#if defined(STORAGE_PGSQL) 
     ret = pg_connect_sync(STORAGE_PGSQL_CONNECT);
     PT(("ret %d\n", ret))
-#endif
 }
 
 mixed query(string q, varargs mixed args) {
@@ -21,3 +21,5 @@ mixed query(string q, varargs mixed args) {
     // avoid sql injections
     return pg_query_sync(sprintf(q, args...));
 }
+
+#endif

@@ -1,21 +1,26 @@
 #include <net.h>
 
+#if defined(STORAGE_MYSQL) 
+# if __EFUN_DEFINED__(db_connect)
+
 /* 
  * from ldmud's concepts/mysql:
+ *
  * As mySQL "limits" the number of connections to 100 and as every
  * connection to the mySQL-server takes time, you should use
  * database serverobjects in your MUD which constantly keep the
  * connection to the mySQL-server.
  *
- * hence we use this instead of letting each object have it's own connection
+ * hence we use this instead of letting each object have its own connection.
+ *
+ * Actually we aren't using this code at all, since psyced makes no 
+ * operations by which it makes sense to use SQL rather than flat files.
  */
 
 volatile int handle;
 
 create() {
-#if defined(STORAGE_MYSQL) 
     handle = db_connect(STORAGE_MYSQL_DATABASE, STORAGE_MYSQL_USER, STORAGE_MYSQL_PASSWORD);
-#endif
 }
 
 mixed query(string q, varargs mixed args) {
@@ -30,3 +35,6 @@ mixed query(string q, varargs mixed args) {
 	data += ({ row });
     return data;
 }
+
+# endif
+#endif
