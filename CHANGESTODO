@@ -12,6 +12,11 @@ vim:nosmarttab:syntax=diff
 | does what it should and we need a distributed communication system
 | such as secushare.org anyway.
 ________________________________________________________________________
+== LIBPSYC / PSYC2 =====================================================
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+- check packet and variable lengths for sanity before allocating memory
+
+________________________________________________________________________
 == NUISANCES worth fixing, possibly ====================================
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 - offline messages not being output (which *can* work even with OTR!)

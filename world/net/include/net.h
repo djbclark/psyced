@@ -102,6 +102,9 @@
 # endif
 #endif
 
+// virtual IP network of GNUnet exit service
+#define	IS_GNUNET(ip) abbrev("169.254.86.", ip)
+
 #define HAS_PORT(PORT, PATH)    (defined(PATH) && defined(PORT) && PORT - 0)
 // also need HAS_TLS_PORT() ?
 
@@ -279,6 +282,7 @@
 #define PRIVACY_SURVEILLED	 0
 #define PRIVACY_UNKNOWN  	-1
 #define PRIVACY_MITMX509	23
-#define PRIVACY_REASONABLE	44
+#define PRIVACY_REASONABLE	42
+#define PRIVACY_GOOD		44
 
 #endif

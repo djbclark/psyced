@@ -1602,6 +1602,10 @@ logon() {
 # endif
 		);
 	    }
+	} else {
+	    unless (beQuiet) w("_status_circuit_encryption_good",
+		// FIXME: just for fun.. if we want to keep it, it belongs into the textdb
+		"Congratulations. You are using GNUnet's forward secret end-to-end encryption.");
 	}
 #endif
 	// cannot if (greeting) here this since jabber:iq:auth depends on this

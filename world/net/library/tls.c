@@ -186,14 +186,12 @@ string tls_bad_cipher(object sock, string scheme) {
     return 0;
 }
 
-// Do not use server technologies like psyced for strong
-// privacy or anonymity requirements. Get started using
-// distributed technologies instead. Check out:
-//	http://youbroketheinternet.org
-//	http://secushare.org
-// But if you're happy with half-baked security, here you
-// have it:
-//					-lynX 2015
+// This function handles safety via TLS, Tor and GNUnet. The
+// latter of the three is the distributed system you should
+// be using.  --lynX 2016
+//
+// FIXME: move this function to a different library file...
+//	  "tls" is no longer appropriate
 //
 int probably_private(object source) {
 	// object has no TCP to it. you have to ask its circuit.
@@ -214,6 +212,15 @@ int probably_private(object source) {
 	// only the server itself could be considered secure.
 	//
 	) return PRIVACY_REASONABLE;
+	//
+	// Coming from GNUnet means that we are ourselves a
+	// GNUnet node. This increases the chances that we
+	// are a private individual's machine in a private
+	// home rather than a server in a computing centre.
+	// Let's guess that is good news.
+	//
+        if (IS_GNUNET(query_ip_number(source))) return PRIVACY_GOOD;
+	//
 #  if __EFUN_DEFINED__(tls_query_connection_state)
 	// Alas, this person is using a TLS/SSL-enhanced
 	// access protocol which, unless the client implements

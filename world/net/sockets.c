@@ -25,6 +25,7 @@ static string safetypin(object o, string ip) {
 	         SECURE_IP_NUMBER(ip) ? "*" :
 #endif
 		 is_localhost(ip) ? "=" :
+		 IS_GNUNET(ip) ? "#" :
 #if __EFUN_DEFINED__(tls_query_connection_state)
 		 tls_query_connection_state(o) ? "+" :
 #endif
