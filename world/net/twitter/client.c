@@ -88,14 +88,16 @@ void status_update(string text) {
 
 parse_statuses(string data) {
 	mixed wurst;
-	string nick;
+	string nick, err;
 	object o;
 	mapping d, p;
 	int i;
 
 	if (!data || data == "") return;
 
-	wurst = parse_json(data);
+	if (err = catch(wurst = parse_json(data))) {
+		P1(("%O: Twitter is over capacity. %O\n", ME, err))
+	}
 	if (mappingp(wurst))
 		wurst = ({ wurst });
 	else unless (pointerp(wurst)) {
