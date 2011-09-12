@@ -36,6 +36,8 @@ volatile int send_to_user = 0;
 volatile int wait = 0;
 volatile mapping friends;
 
+volatile object fetcher;
+
 user_stream();
 
 string object_file_name() {
@@ -217,7 +219,7 @@ user_stream_data(string data, string headers, int http_status, int fetching) {
 	if (!friends) {
 	    if (catch(friends = parse_json(data))) {
 		    P1(("%O: Twitter refuses to give me my subscriptions.\n", ME))
-		    remove_interactive(ME);
+		    if (fetching && objectp(fetcher)) fetcher->disconnect();
 	    }
 	} else parse_statuses(data);
     }
@@ -258,9 +260,9 @@ user_stream() {
     P3(("twitter/client:user_stream()\n"))
     if (!authorized) return enqueue(ME, ({ #'user_stream })); //'}));
     friends = 0;
-    object user_ua = clone_object(NET_PATH "http/fetch");
-    user_ua->content(#'user_stream_data, 1, 1); //');
-    fetch(user_ua, userstream_url + "/user.json", "GET", 0, 0, 1);
+    fetcher = clone_object(NET_PATH "http/fetch");
+    fetcher->content(#'user_stream_data, 1, 1); //');
+    fetch(fetcher, userstream_url + "/user.json", "GET", 0, 0, 1);
 }
 
 oauth_success() {
