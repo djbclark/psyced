@@ -216,7 +216,7 @@ user_stream_data(string data, string headers, int http_status, int fetching) {
     if (http_status == R_OK && data && data != "") {
 	if (!friends) {
 	    if (catch(friends = parse_json(data))) {
-		    P1(("%O: Twitter is over capacity. %O\n", ME, err))
+		    P1(("%O: Twitter refuses to give me my subscriptions.\n", ME))
 		    remove_interactive(ME);
 	    }
 	} else parse_statuses(data);
