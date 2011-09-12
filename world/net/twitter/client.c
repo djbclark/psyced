@@ -214,10 +214,12 @@ user_stream_data(string data, string headers, int http_status, int fetching) {
     P3(("twitter/client:user_stream_data(..., %O, %O, %O)\n%O\n", headers, http_status, fetching, data))
 
     if (http_status == R_OK && data && data != "") {
-	if (!friends)
-	    friends = parse_json(data);
-	else
-	    parse_statuses(data);
+	if (!friends) {
+	    if (catch(friends = parse_json(data))) {
+		    P1(("%O: Twitter is over capacity. %O\n", ME, err))
+		    remove_interactive(ME);
+	    }
+	} else parse_statuses(data);
     }
 
     if (fetching) {
