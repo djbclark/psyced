@@ -146,7 +146,7 @@ parse_request(input) {
 	}
 	P4(("=== HTTP user requested url: %O\n", url))
 	if (method == "connect") next_input_to(#'parse_wait);
-	else if (!prot) body();	// HTTP/0.9 has no headers
+	else if (!prot) process();	// HTTP/0.9 has no headers
 	else next_input_to(#'parse_header);
 }
 
