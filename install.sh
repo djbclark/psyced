@@ -22,6 +22,8 @@
 #
 # psyclpc as obtained from http://lpc.psyc.eu
 driver="psyclpc"
+driverver="20111122"
+lpcbaseurl="http://www.psyced.org/files/"
 zip="bz2"
 zipcmd="bzip2"
 
@@ -186,6 +188,18 @@ fi
 #get WITHOUT_DRIVER "n"
 WITHOUT_DRIVER="n"
 echo ""
+if ! test `ls -1 ${driver}-*tar.${zip} 2>/dev/null`
+    then
+        if wget "${lpcbaseurl}/${driver}-${driverver}.tar.${zip}"
+        then
+                echo "${driver} successfully retrieved."
+                else
+        echo "${hi}ATTENTION: Unable to download ${driver}"
+        echo "${hi}ATTENTION: ${lo}You have no ${driver}-*.tar.${zip} in this directory."
+        echo "Please obtain one from http://lpc.psyc.eu."
+        $exit
+        fi
+    else
 if test -d .git
 then
     :
@@ -219,6 +233,7 @@ else
 	    fi
 	else
 	    echo "I can see you have a ${driver} tar here. That's good."
+fi
 	    echo ""
 	fi
     fi

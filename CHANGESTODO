@@ -10,6 +10,10 @@ vim:nosmarttab:syntax=diff
 ________________________________________________________________________
 == SERIOUS!!! ==========================================================
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+- MUC im arsch
+- fix /part behaviour
+- Ungültige Route nach psyc://psyced.org im psyc://psyced.org/~lynx Context festgestellt.
+
 - check in user:input() if data is in utf8 (using RE_UTF8) in order to produce
   proper error messages before it is processed further and may end up in
   net/jabber's emit() where it is dropped silently (see CHARS_XMPP.log)
@@ -739,6 +743,10 @@ or switches in our muve code, because they will never be needed!
 ________________________________________________________________________
 == JABBER S2S ISSUES ===================================================
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+- fippo: scheint wir verarbeiten beim unavailable nur das direkte event
+	 während es mit einem delay-element eigentlich ein bereits
+	 vergangenes ding beschreibt
+
 - /x ALIAS aka xmpp:example@gmail.com results in
       "[_nick_target]" ist nicht erreichbar.
   example ist online + man hat friend status.
