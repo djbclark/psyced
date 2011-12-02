@@ -175,7 +175,7 @@ int tls_check_cipher(object sock, string scheme) {
     P3(("%O is using the %O cipher.\n", sock, m[TLS_CIPHER]))
     // shouldn't our negotiation have ensured we have PFS?
 
-    if (stringp(t = m[TLS_CIPHER]) &&! abbrev("DHE", t)) {
+    if (stringp(t = m[TLS_CIPHER]) &&! (abbrev("DHE", t) || abbrev("ECDHE", t))) {
 	monitor_report("_warning_circuit_encryption_cipher_details",
 	    object_name(sock) +" · using "+ t +" cipher");
 	// we can't expect that degree of privacy from jabber, for now
