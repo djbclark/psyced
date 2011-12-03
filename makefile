@@ -78,5 +78,6 @@ openwrt:
 	mv config/init.d/psyced-openwrt etc/init.d/psyced
 	mv config/psyced.ini etc
 	rm -r .git* CHANGESTODO install.sh bin/psyked bin/csv* config pike
-	rm -r run/* utility world/drivers/amylaar world/drivers/mudos
-
+	rm -r run/* utility world/drivers/amylaar world/drivers/mudos log
+	# directory is generated elsewhere
+	ln -s /var/log/psyced log
