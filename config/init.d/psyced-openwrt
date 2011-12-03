@@ -1,0 +1,49 @@
+#!/bin/sh /etc/rc.common
+ 
+START=90
+STOP=90
+
+start() {
+	if test ! -r  /var/log/psyced
+	then 
+		ln -s /opt/psyced/log /var/log/psyced
+	fi
+	echo -n "Starting psyced in background ... "
+	sudo -bHu psyced /bin/sh /opt/psyced/bin/psyced &
+	echo "DONE"
+}                 
+ 
+stop() {
+	rm /opt/psyced/world/data/.autorestart
+	if test -r /opt/psyced/world/data/psyclpc.pid
+	then
+		echo -n "Instructing psyced to gently shut down ... "
+		kill -1 `cat /opt/psyced/world/data/psyclpc.pid`
+		rm /opt/psyced/world/data/psyclpc.pid && echo "OK"
+	else
+		echo -n "Killing psyced brutally ... "
+		kill -1 `cat /opt/psyced/world/data/psyclpc.pid` >/dev/null 2>&1
+		kill -3 `cat /opt/psyced/world/data/psyced.pid` && echo "OK"
+	fi
+}
+
+EXTRA_COMMANDS="prepare"
+EXTRA_HELP="	prepare	First time configurator script. Please run /etc/init.d/psyced prepare in order to set-up your system for first psyced execution"
+
+prepare() {
+	if !(cat /etc/group | grep psyc 1>/dev/null)
+	then
+		echo "Adding psyc group to /etc/group ... "
+		echo "psyc:x:4404:" >> /etc/group
+	fi
+	if !(cat /etc/passwd | grep psyc 1>/dev/null)
+	then
+		echo "Adding psyced user to /etc/passwd ... "
+		echo "psyced:KnMFzCSyWjQC.:4404:4404:the PSYC enhanced daemon:/var:/bin/false" >> /etc/passwd
+	fi
+	
+	echo -n "Preparing system ... "
+	chown -R psyced:psyc /opt/psyced
+	echo "done"
+}
+
