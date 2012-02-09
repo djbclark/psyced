@@ -1773,6 +1773,7 @@ cmd(a, args, b, source, vars) {
 			} else {
 				snames[source] = ARGS(1);
 #ifndef PLACE_MASQUERADE_SECRET
+				// should be "_notice_place_nick" ? (_local?)
 				castmsg(ME, "_notice_place_masquerade",
 				    "[_nick] now masquerades as [_nick_local].",
 				     ([ "_nick" : previous_object()->qName(),

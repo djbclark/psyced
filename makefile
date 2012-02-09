@@ -68,16 +68,3 @@ rights:
 	find . -type f -exec chmod 644 {} \;
 	chmod +x bin/* run/* config/psyced.settings install.sh utility/multipatcher
 
-openwrt:
-	@echo This installs psyced on an openwrt by deleting large parts
-	@echo of psyced that are not necessary. 3 seconds pause.
-	@sleep 3
-	mkdir local
-	cp config/init.d/psyced-openwrt etc/init.d/psyced
-	mv config/blueprint/* local
-	mv config/psyced.ini local
-	ln -s /opt/psyced/local /etc/psyc
-	rm -r .git* CHANGESTODO install.sh bin/psyked bin/csv* config pike
-	rm -r run/* utility world/drivers/amylaar world/drivers/mudos log
-#	# directory is generated elsewhere
-	ln -s /var/log/psyced log
