@@ -94,22 +94,22 @@ _echo_alias_added_NICEBUTCANTWORK
 |NOTICE :{_VAR_method}
 
 _echo_end_places
-|#323 :End of /LIST
+|#323 [_INTERNAL_nick_me] :End of /LIST
 
 _echo_start_places
-|#321 Channel :Users Topic
+|#321 [_INTERNAL_nick_me] Channel :Users Topic
 
 _echo_end_places_public
-|#323 :End of /LIST
+|#323 [_INTERNAL_nick_me] :End of /LIST
 
 _echo_start_places_public
-|#321 Channel :Users Topic
+|#321 [_INTERNAL_nick_me] Channel :Users Topic
 
 _echo_end_places_entered
-|#323 :End of /LIST
+|#323 [_INTERNAL_nick_me] :End of /LIST
 
 _echo_start_places_entered
-|#321 Channel :Users Topic
+|#321 [_INTERNAL_nick_me] Channel :Users Topic
 
 _request_legacy_CTCP
 |:[_INTERNAL_source_IRC] PRIVMSG [_INTERNAL_nick_me] :%[_type] [_value]%
