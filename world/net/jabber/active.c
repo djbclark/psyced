@@ -410,6 +410,14 @@ jabberMsg(XMLNode node) {
 	break;
     case "db:verify": // receiving step 9
 	// t = NAMEPREP(node["@to"]) + ";" + node["@id"];
+	if (hostname != node["@from"]) {
+	    // http://xmpp.org/resources/security-notices/server-dialback/
+	    P0(("db:verify: hostname %s != %s (verify from address)\n",
+		hostname, node["@from"]))
+	    emitraw("</stream:stream>");
+	    remove_interactive(ME);
+	    return;
+	}
 	t = node["@id"];
 	o = gateways[t];
 	if (objectp(o)) {
