@@ -9,7 +9,7 @@
 # emerge. From nothing. fischerspooner rocks.   -lynX
 
 P=psyced
-V=20111122
+V=20120821
 
 # this part can be executed once the ebuild is in portage
 
