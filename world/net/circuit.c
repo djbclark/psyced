@@ -55,6 +55,8 @@ volatile int issync;
 
 #ifndef ERQ_WITHOUT_SRV
 string hostname;	// original hostname
+mixed *srv_hostlist;
+int srv_index;
 
 srv_choose(mixed *hostlist, string transport) {
 	string srvhost; 
@@ -74,6 +76,8 @@ srv_choose(mixed *hostlist, string transport) {
 		return connect_failure("_failure_unavailable_service",
 				       "No service offered by domain " + hostname);
 	}
+	srv_hostlist = hostlist;
+	srv_index = 0;
 
 	// we use other srv records for fallback..
 	// saga thinks we can use quote and pass an array into the lambda,
@@ -90,6 +94,7 @@ srv_choose(mixed *hostlist, string transport) {
 #endif
 
 void reconnect() {
+	P0(("reconnect %O:%d\n", host, port))
 	if (ISSYNC || retry++ < MAX_RETRY) {
 		waitforme = waitforme * 2 + random(waitforme);
 		call_out(#'connect, waitforme);
@@ -174,7 +179,19 @@ void pushback(string failmc) {
 // wouldn't it be nicer to also pass real vars here?
 void connect_failure(string mc, string reason) {
 	::connect_failure(mc, reason);
-	if (abbrev("_attempt", mc)) reconnect();
+	if (abbrev("_attempt", mc)) {
+#ifndef ERQ_WITHOUT_SRV
+		if (pointerp(srv_hostlist) && srv_index < sizeof(srv_hostlist)) {
+			srv_index++;
+			host = srv_hostlist[srv_index][DNS_SRV_NAME];
+			port = srv_hostlist[srv_index][DNS_SRV_PORT];
+			retry = 0;
+			waitforme = 0;
+			P0(("changing to srv target #%d: %O:%d\n", srv_index, host, port))
+		}
+#endif
+		reconnect();
+	}
 	else pushback(mc);
 }
 
