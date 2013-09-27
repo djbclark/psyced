@@ -45,7 +45,8 @@ DEPEND="${RDEPEND}
 		>=sys-devel/gettext-0.12.1"
 
 #MYS="/var/tmp/portage/${P}/work/${P}/src"
-MYS="${S}/src"
+#MYS="${S}/src"
+MYS="${WORKDIR}/${PN}/src"
 
 use debug && {
 		RESTRICT="${RESTRICT} nostrip"

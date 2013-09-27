@@ -33,7 +33,7 @@ RDEPEND="${DEPEND}
 PROVIDE="virtual/jabber-server virtual/irc-server virtual/psyc-server"
 
 #MYS="${WORKDIR}/${CURRENT}/"
-MYS="${WORKDIR}/${P}/"
+MYS="${WORKDIR}/${S}/"
 
 pkg_setup() {
 	enewgroup psyc
