@@ -219,7 +219,8 @@ X
 	close O;
 	chmod 0644, $t;
 
-	my $ports="$c{_protocols_port_PSYC} $c{_protocols_port_jabber_S2S} $c{_protocols_port_applet} $c{_protocols_port_telnet} $c{_protocols_port_HTTP} $c{_protocols_port_IRC} $c{_protocols_port_jabber_clients} $c{_protocols_port_SMTP} $c{_protocols_port_NNTP} $c{_protocols_port_SPYC}";
+	my $ports="";
+	$ports .= "$c{_protocols_port_PSYC} $c{_protocols_port_jabber_S2S} $c{_protocols_port_applet} $c{_protocols_port_telnet} $c{_protocols_port_HTTP} $c{_protocols_port_IRC} $c{_protocols_port_jabber_clients} $c{_protocols_port_SMTP} $c{_protocols_port_NNTP} $c{_protocols_port_SPYC}" if $c{_protocols_use_encryption} ne 'only';
 	$ports .= " $c{_protocols_port_PSYC_encrypted} $c{_protocols_port_telnet_encrypted} $c{_protocols_port_HTTP_encrypted} $c{_protocols_port_IRC_encrypted} $c{_protocols_port_jabber_clients_encrypted} $c{_protocols_port_SMTP_encrypted} $c{_protocols_port_NNTP_encrypted}" if $c{_protocols_use_encryption};
 
 	my @adm;
@@ -382,6 +383,9 @@ provided together as the driver won't figure out the proper name for the IP
 number or vice versa. Please re-edit the psyced.ini to provide all variables.
 
 X
+	undef $c{_protocols_use_encryption}
+	  if $c{_protocols_use_encryption} eq 'no';
+
 	if ($c{_protocols_use_encryption}) {
 		my $t = $c{_basic_path_PEM_key};
 		if ($t) {
@@ -657,6 +661,49 @@ X
 		}
 	}
 
+# TORRC
+	$t = "$base/etc/tor";
+	mkdir($t);
+	$t = "$base/var";
+	mkdir($t);
+	$t = "$base/var/tor";
+	mkdir($t);
+	$t = "$base/etc/tor/torrc";
+	say "Generating control file $t ..\n";
+	rename $t, "$t~";
+	open O, '>', $t or die "Cannot write to $t";
+
+	print O <<X;
+# This torrc generated from $0
+# Don't edit unless you are no longer going to use the configuration tool.
+# Edit $conf instead, then run $0 again.
+
+ControlSocket $base/var/tor/.control
+DataDirectory $base/var/tor
+SocksPort 9050
+
+HiddenServiceDir $base/etc/tor/.onion
+X
+	my $i = 4;
+	foreach $n ( %c ) {
+		next unless $n =~ /^(_protocols_port_\w+)_hidden/;
+		print O "HiddenServicePort $c{$n} 127.0.0.1:$c{$1}\n";
+		say "Too many hidden service ports. Please use as few as possible.\n" if $i-- < 0;
+	}
+	print O <<X;
+
+#ControlPort 9051
+#Log notice stdout
+#DirReqStatistics 0
+#DNSPort 127.0.0.1:5353
+#SafeSocks 1
+X
+	print O <<X if $c{_optional_tor_nodes_entry};
+EntryNodes $c{_optional_tor_nodes_entry}
+X
+	close O;
+
+# ARCHETYPE
 	chdir "$sandbox/net/place" or die "Where is my net/place? $!";
  
 ## start of former archetype.pl
