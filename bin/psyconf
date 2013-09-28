@@ -349,6 +349,7 @@ X
 
 	my $db = $c{_optional_level_debug} || '0';
 	my $psyced = "$execs/$driver -DDEBUG=$db";
+	my $torify = "";
 	my $debugfile;
 
 	if ( $c{_optional_use_file_debug} ) {
@@ -370,6 +371,13 @@ X
 		my $fqdn = "$c{_basic_host_name}.$c{_basic_host_domain}";
 		$psyced .= " --hostname $fqdn";
 		$hc = 0;	# no problem
+		say "Your hostname will be assigned as $fqdn.\n";
+		if ($c{_basic_host_domain} eq 'onion') {
+			$torify = "torsocks";
+			say "Enabling PSYC federation over Tor: Using "
+				. "torsocks wrapper around psyced.\n";
+			say "Warning: It will probably not function.\n"
+		}
 	}
 	## ldmud bug number two
 #WARNING: Because of some funny bug the driver will probably not bind properly
@@ -509,7 +517,7 @@ then
 fi
 
 # if your ldmud is too old, it may not understand --pidfile and --tls-*
-commandline="$psyced -s 0 -s v0 --swap-file $base/psyced.swap --erq $execs/erq --pidfile $sandbox/data/$driver.pid -m $sandbox -u $portUDP $ports"
+commandline="$torify $psyced -s 0 -s v0 --swap-file $base/psyced.swap --erq $execs/erq --pidfile $sandbox/data/$driver.pid -m $sandbox -u $portUDP $ports"
 
 # keep the pid of this wrapper process, too
 echo \$\$ >data/psyced.pid
@@ -669,7 +677,7 @@ X
 	$t = "$base/var/tor";
 	mkdir($t);
 	$t = "$base/etc/tor/torrc";
-	say "Generating control file $t ..\n";
+	say "Generating Tor configuration $t ..\n";
 	rename $t, "$t~";
 	open O, '>', $t or die "Cannot write to $t";
 
@@ -803,7 +811,8 @@ X
 	}
 #	close IG;
 
-	print "\nModel creation completed successfully.\n";
+	#print "\nModel creation completed successfully.\n";
+	print "\n";
 
 ## end of former archetype.pl
 

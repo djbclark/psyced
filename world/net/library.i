@@ -70,7 +70,8 @@ varargs int register_target(string uniform, vaobject handler, vaint shy) {
 		if (shy) return 2;
 	}
 	unless (handler) handler = previous_object();
-	P2(("register_target(%O) by %O\n", uniform, handler))
+	P2(("register_target(%O, %O) by %O\n", uniform, handler,
+	    previous_object()))
 	targets[uniform] = handler;
 #if 0 // this shouldn't be necessary TODO
 	uniform = lower_case(uniform);

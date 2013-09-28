@@ -319,6 +319,12 @@ int psyc_sendmsg(mixed target, string mc, mixed data, mapping vars,
 		string psychopo;
 		string psycippo = "psyc://"+ $1 +"/";
 
+#if 0
+		if (trail(".onion", hopo)) {
+			psycippo = hopo;    // not a solution
+			raise_error("Unable to handle .onion correctly, snif.\n");
+		}
+#endif
 		// if ($3 && $3 != PSYC_SERVICE) {
 		if ($9) {
 			hopo += ":"+$9;

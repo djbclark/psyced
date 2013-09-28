@@ -1,6 +1,13 @@
 // vim:syntax=lpc:ts=8
-/* implementation of the socks5 protocl
+
+/* implementation of the socks5 protocol
  * http://tools.ietf.org/html/rfc1928
+ *
+ * accepts SOCKS connections on a port and creates outgoing connection
+ * if requested to do so. when it enter STATE_READY it stops working.
+ * there is no interaction with the rest of the psyced code, so it's
+ * a bit odd to use psyced as a socks proxy. makes more sense if psyclpc
+ * was capable of connecting to hosts via SOCKS.
  */
 #include <net.h> 
 #include <input_to.h>
@@ -196,13 +203,14 @@ void read_callback(string data) {
 	return;
     } else {
 	buffer += data;
+	// switch this!
 	if (state == STATE_INITIAL) {
 	    parseNegotiation();
 	}
-	if (state == STATE_AUTH_USERPASS) {
+	else if (state == STATE_AUTH_USERPASS) {
 	    parseUserPass();
 	}
-	if (state == STATE_REQUEST) {
+	else if (state == STATE_REQUEST) {
 	    parseRequest();
 	}
     }
