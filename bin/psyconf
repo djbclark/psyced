@@ -376,7 +376,7 @@ X
 			$torify = "torsocks";
 			say "Enabling PSYC federation over Tor: Using "
 				. "torsocks wrapper around psyced.\n";
-			say "Warning: It will probably not function.\n"
+			say "Warning: Maybe, if you install unbound.conf, it actually works.\n"
 		}
 	}
 	## ldmud bug number two
@@ -617,6 +617,8 @@ test -x $base/bin/psyced || exit 0
 case "\$1" in
     start)
 	echo -n "Starting psyced in background ... "
+	# route .onion addresses through Tor
+	iptables -t nat -A OUTPUT -p tcp -d 127.192.0.0/10 -j REDIRECT --to-ports 9040
 	# in nei's environment a zsh would be started to execute the
 	# psyced script. so he suggests to add a -s parameter. in our
 	# environment both strategies work.
@@ -688,7 +690,10 @@ X
 
 ControlSocket $base/var/tor/.control
 DataDirectory $base/var/tor
+TransPort 9040
 SocksPort 9050
+DNSPort 9053
+AutomapHostsOnResolve 1
 
 HiddenServiceDir $base/etc/tor/.onion
 X
@@ -703,7 +708,6 @@ X
 #ControlPort 9051
 #Log notice stdout
 #DirReqStatistics 0
-#DNSPort 127.0.0.1:5353
 #SafeSocks 1
 X
 	print O <<X if $c{_optional_tor_nodes_entry};
