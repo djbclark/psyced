@@ -169,12 +169,14 @@ int tls_check_service_identity(string name, mixed cert, string scheme) {
 }
 
 string tls_bad_cipher(object sock, string scheme) {
-    // we can't expect that degree of privacy from jabber, for now
-    //if (scheme == "xmpp") return 0;
+    // ignore if pidgin uses a bad cipher over an ssh tunnel
+    if (scheme == "jabber" && is_localhost(query_ip_number(sock))) return 0;
+
     mixed t = tls_query_connection_info(sock);
     unless (t) return "NO-CIPHER";  // shouldnt happen
     t = t[TLS_CIPHER];
     P3(("%O is using the %O cipher.\n", sock, t))
+
     // shouldn't our negotiation have ensured we have PFS?
     if (stringp(t) &&! (abbrev("DHE", t) || abbrev("ECDHE", t))) {
 	monitor_report("_warning_circuit_encryption_cipher_details",
