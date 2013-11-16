@@ -270,7 +270,7 @@ void notify_shutdown(string crash_reason) {
     object o;
     int i;
 
-    P3(("notify_shutdown(%O) from %O\n", crash_reason, previous_object()))
+    P0(("notify_shutdown(%O) from %O\n", crash_reason, previous_object()))
     if (previous_object() && previous_object() != this_object())
 	return;
 #if DEBUG > 0
@@ -282,7 +282,8 @@ void notify_shutdown(string crash_reason) {
 #endif
     // walk thru the shutdown path a third time in case this is a
     // shutdown by kill -1 process.
-    SIMUL_EFUN_FILE -> server_shutdown(4404, 2);
+    SIMUL_EFUN_FILE -> server_shutdown("notify_shutdown: "+ crash_reason,
+				       4404, 2);
     // save_wiz_file();
 }
 
@@ -290,7 +291,7 @@ void notify_shutdown(string crash_reason) {
 void slow_shut_down(int minutes) {
     SIMUL_EFUN_FILE -> shout(0, "_notice_broadcast_shutdown_panic",
 	"Server is slowly running out of memory. Restart imminent.");
-    SIMUL_EFUN_FILE -> server_shutdown(1, 0);
+    SIMUL_EFUN_FILE -> server_shutdown("slow_shut_down: "+ minutes, 1);
 }
 
 // called by driver at shutdown for every user

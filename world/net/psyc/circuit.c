@@ -215,9 +215,6 @@ int logon(int neverfails) {
 		  "Your cipher choice does not provide forward secrecy.",
 		    ([ "_circuit_encryption_cipher": t ]));
 		QUIT
-            }
-        }
-
 	    }
 	    if (mappingp(cert = tls_certificate(ME, 0))) {
 		if (cert[0] != 0) {
