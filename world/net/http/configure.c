@@ -266,7 +266,7 @@ htget(prot, query, headers, qs) {
 	    s += "<b>Your chatserver is being restarted.</b>";
 	    // write at the bottom wouldn't be called after shutdown, would it?
 	    write(s);
-	    shutdown();
+	    server_shutdown("restart by web configuration", 1);
 	    return 1;
     case "list_udp":
 	    {

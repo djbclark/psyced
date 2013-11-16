@@ -626,7 +626,7 @@ sName2(a) {
 "Object could not be restored!");
 
 #ifdef PANIC_ON_NO_ADMIN
-		shutdown();
+		server_shutdown("could not restore admin");
 #endif
 		destruct(ME);
 		return 0;
@@ -687,7 +687,7 @@ sName2(a) {
 "You are registered as admin, but I could not restore your data!");
 			// raise_error("boss without password\n");
 #ifdef PANIC_ON_NO_ADMIN
-			shutdown();
+			server_shutdown("could not restore admin");
 #endif
 			destruct(ME);
 			return 0;
