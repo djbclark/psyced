@@ -210,10 +210,14 @@ int logon(int neverfails) {
 #ifdef __TLS__
 	sAuthHosts(([ ])); // reset authhosts 
 	if (tls_available() && tls_query_connection_state(ME) == 1) {
-	    unless (tls_check_cipher(ME, "psyc")) {
+	    if (t = tls_bad_cipher(ME, "psyc")) {
 		croak("_error_circuit_encryption_cipher",
-		  "Your cipher choice does not provide forward secrecy.");
+		  "Your cipher choice does not provide forward secrecy.",
+		    ([ "_circuit_encryption_cipher": t ]));
 		QUIT
+            }
+        }
+
 	    }
 	    if (mappingp(cert = tls_certificate(ME, 0))) {
 		if (cert[0] != 0) {

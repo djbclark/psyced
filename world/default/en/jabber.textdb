@@ -158,6 +158,9 @@ _failure_unsupported_function_whisper
 _failure_filter_strangers
 |<message to='[_INTERNAL_target_jabber]' from='[_INTERNAL_source_jabber]' type='error'><body>{_failure_unsupported_function_whisper}</body><error code='503' type='cancel'><service-unavailable xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/><text xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'>{_failure_filter_strangers}</text></error></message>
 
+_failure_unsuccessful_delivery_timeout_dialback
+|## happens so frequently it is mostly just annoying
+
 _notice_received_email_UNUSED
 |<message from='[_INTERNAL_source_jabber]' to='[_INTERNAL_target_jabber]' type='headline'><body>{_notice_received_email}</body></message>
 

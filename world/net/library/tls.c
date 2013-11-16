@@ -168,19 +168,19 @@ int tls_check_service_identity(string name, mixed cert, string scheme) {
     return 0;
 }
 
-int tls_check_cipher(object sock, string scheme) {
-    string t;
-    mixed m = tls_query_connection_info(sock);
-
-    P3(("%O is using the %O cipher.\n", sock, m[TLS_CIPHER]))
+string tls_bad_cipher(object sock, string scheme) {
+    // we can't expect that degree of privacy from jabber, for now
+    //if (scheme == "xmpp") return 0;
+    mixed t = tls_query_connection_info(sock);
+    unless (t) return "NO-CIPHER";  // shouldnt happen
+    t = t[TLS_CIPHER];
+    P3(("%O is using the %O cipher.\n", sock, t))
     // shouldn't our negotiation have ensured we have PFS?
-
-    if (stringp(t = m[TLS_CIPHER]) &&! (abbrev("DHE", t) || abbrev("ECDHE", t))) {
+    if (stringp(t) &&! (abbrev("DHE", t) || abbrev("ECDHE", t))) {
 	monitor_report("_warning_circuit_encryption_cipher_details",
 	    object_name(sock) +" · using "+ t +" cipher");
-	// we can't expect that degree of privacy from jabber, for now
-	if (scheme != "xmpp") return 0;
+	return t;
     }
-    return 1;
+    return 0;
 }
 

@@ -1569,13 +1569,15 @@ logon() {
 		// deteriorate differently?
 	}
 #ifdef __TLS__
+	string evil;
+
 	if (tls_query_connection_state(ME) == 1) {
-	    if (tls_check_cipher(ME, t)) {
-                unless (beQuiet) w("_status_circuit_encryption_cipher");
-	    } else {
+	    if (evil = tls_bad_cipher(ME, t)) {
 		// i bet jabber users will love this
-                w("_warning_circuit_encryption_cipher");
+                w("_warning_circuit_encryption_cipher", 0, ([ "_circuit_encryption_cipher": evil ]));
 		//return remove_interactive(ME);
+	    } else {
+                unless (beQuiet) w("_status_circuit_encryption_cipher");
 	    }
 	}
 #endif

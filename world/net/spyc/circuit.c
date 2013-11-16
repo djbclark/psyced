@@ -102,10 +102,12 @@ void sender_verification(string sourcehost, mixed targethost)
 
 // gets called during socket logon
 int logon(int failure) {
+    string t;
     sAuthHosts(([ ])); // reset authhosts 
     legal_senders = ([ ]);
     instate = ([ "_INTERNAL_origin" : ME ]);
     outstate = ([ ]);
+
 #ifdef __TLS__
     P0(("circuit logon %O %O\n", tls_available(), tls_query_connection_state(ME)))
     // FIXME: needs to handle the not-detected case
@@ -117,16 +119,15 @@ int logon(int failure) {
 	    } else if (tls_query_connection_state(ME) == 1) {
 		    certinfo = tls_certificate(ME, 0);
 		    P0(("certinfo: %O\n", certinfo))
-		    unless (tls_check_cipher(ME, "psyc")) {
+		    if (t = tls_bad_cipher(ME, "psyc")) {
 			    croak("_error_circuit_encryption_cipher",
-	      "Your cipher choice does not provide forward secrecy.");
+		      "Your cipher choice does not provide forward secrecy.",
+				([ "_circuit_encryption_cipher": t ]));
 			    //destruct(ME);
-		    }
-
+		    }   
 	    }
     }
 #endif
-
     peerip = query_ip_number(ME) || "127.0.0.1";
 
     input_to(#'feed, INPUT_IGNORE_BANG);
