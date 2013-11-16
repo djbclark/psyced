@@ -216,9 +216,6 @@ int logon(int neverfails) {
 		    ([ "_circuit_encryption_cipher": t ]));
 		QUIT
             }
-        }
-
-	    }
 	    if (mappingp(cert = tls_certificate(ME, 0))) {
 		if (cert[0] != 0) {
 		    // log error 17 or 18 + cert here
