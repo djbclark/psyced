@@ -555,6 +555,8 @@ int is_localhost(string host) {
     // we should know all of our hostnames in advance for
     // security anyway
     return member(localhosts, lower_case(host));
+    // that means that we have to restart the server each time
+    // the dial-up IP changes..	    :(
 }
 #else
 int is_localhost(string host, closure callback, varargs array(mixed) extra) {

@@ -15,6 +15,9 @@
 inherit PRO_PATH "library2";
 inherit PRO_PATH "http/library2";
 #else
+# ifdef __TLS__
+inherit NET_PATH "library/tls";
+# endif
 # ifdef SANDBOX
 inherit NET_PATH "library/sandbox";
 # endif
@@ -28,9 +31,6 @@ inherit NET_PATH "library/sasl";
 # endif
 inherit NET_PATH "library/share";
 inherit NET_PATH "library/signature";
-# ifdef __TLS__
-inherit NET_PATH "library/tls";
-# endif
 inherit NET_PATH "library/text";
 inherit NET_PATH "library/time";
 inherit NET_PATH "library/uniform";
