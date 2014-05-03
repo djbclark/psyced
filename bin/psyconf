@@ -376,7 +376,9 @@ X
 			$torify = "torsocks";
 			say "Enabling PSYC federation over Tor: Using "
 				. "torsocks wrapper around psyced.\n";
-			say "Warning: Maybe, if you install unbound.conf, it actually works.\n"
+			say "Warning: Make sure either dnsmasq.conf or "
+				. "unbound.conf are in\n"
+				. "place for .onion resolution to function.\n";
 		}
 	}
 	## ldmud bug number two
