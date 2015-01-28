@@ -5,13 +5,13 @@ _warning_server_shutdown_temporary
 |Serverneustart: [_reason]
 
 _status_circuit_encryption_cipher
-|Gratuliere! Deine Verbindung ist mit Folgenlosigkeit verschlüsselt.
+|Gratuliere! Deine Verbindung ist mit forward secrecy verschlüsselt ([_circuit_encryption_cipher]).
 
 _warning_circuit_encryption_cipher
-|Deine Verbindung ist leider ohne Folgenlosigkeit verschlüsselt ([_circuit_encryption_cipher]).
+|Deine Verbindung ist leider ohne forward secrecy verschlüsselt ([_circuit_encryption_cipher]).
 
 _error_circuit_encryption_cipher
-|Deine Verbindung ist ohne Folgenlosigkeit verschlüsselt ([_circuit_encryption_cipher]).
+|Deine Verbindung ist ohne forward secrecy verschlüsselt ([_circuit_encryption_cipher]).
 
 _failure_disabled_function_register
 |Registrierung ist auf diesem Server deaktiviert.

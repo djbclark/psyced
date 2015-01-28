@@ -466,8 +466,6 @@ ________________________________________________________________________
       occasional failure reports to all involved senders, then silently
       drops things that were undeliverable (in the case of packet ids,
       the broken recipient still has the possibility to recover the next day)
-- Repeatedly unable to reach whatever.example.com in order to deliver a
-  _message_private to 0. Why does it say "0" here.. ouch.
 ? what to do when hosts talk faster then we resolve them?
   see around _error_invalid_host_slow
 

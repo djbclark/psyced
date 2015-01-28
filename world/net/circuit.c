@@ -151,7 +151,7 @@ void pushback(string failmc) {
 					  // name in this case (especially if
 					  // we decide that source shouldn't
 					  // be the original target)?
-	       "Could not establish a circuit to [_host] in order to deliver a [_method_relay] to [_source].",
+	       0, // "Could not establish a circuit to [_host] in order to deliver a [_method_relay] to [_source].",
 	       ([ "_method_relay": t[1],
 		  "_data_relay" : t[2],
 		// we used to add the vars to the error message,

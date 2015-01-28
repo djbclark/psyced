@@ -5,10 +5,10 @@ _status_circuit_encryption_cipher
 |Congratulations. Your connection is encrypted with forward secrecy.
 
 _warning_circuit_encryption_cipher
-|Your cipher choice does not provide forward secrecy ([_circuit_encryption_cipher]).
+|Your [_circuit_encryption_cipher] cipher does not provide forward secrecy.
 
 _error_circuit_encryption_cipher
-|Unfortunately your cipher choice does not provide forward secrecy ([_circuit_encryption_cipher]).
+|Unfortunately your [_circuit_encryption_cipher] cipher does not provide forward secrecy.
 
 _failure_disabled_function_register
 |Registration disabled on this server.

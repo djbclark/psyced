@@ -2,13 +2,13 @@
 ## tradotto al 30% ... cerca /TODO/ per continuare
 
 _status_circuit_encryption_cipher
-|Muy bueno! La tua connessione è crittata senza conseguenze.
+|Muy bueno! La tua connessione è crittata con forward secrecy.
 
 _warning_circuit_encryption_cipher
-|La tua connessione non è crittata senza conseguenze ([_circuit_encryption_cipher]).
+|La tua connessione non provvede forward secrecy ([_circuit_encryption_cipher]).
 
 _error_circuit_encryption_cipher
-|Purtroppo la tua connessione non è crittata senza conseguenze ([_circuit_encryption_cipher]).
+|Purtroppo la tua connessione non provvede forward secrecy ([_circuit_encryption_cipher]).
 
 _failure_disabled_function_register
 |Registrazione di nuovi utenti disabilitata su questo server.

@@ -121,7 +121,7 @@ int logon(int failure) {
 		    P0(("certinfo: %O\n", certinfo))
 		    if (t = tls_bad_cipher(ME, "psyc")) {
 			    croak("_error_circuit_encryption_cipher",
-		      "Your cipher choice does not provide forward secrecy.",
+  "Your [_circuit_encryption_cipher] cipher does not provide forward secrecy.",
 				([ "_circuit_encryption_cipher": t ]));
 			    //destruct(ME);
 		    }   

@@ -212,7 +212,7 @@ int logon(int neverfails) {
 	if (tls_available() && tls_query_connection_state(ME) == 1) {
 	    if (t = tls_bad_cipher(ME, "psyc")) {
 		croak("_error_circuit_encryption_cipher",
-		  "Your cipher choice does not provide forward secrecy.",
+  "Your [_circuit_encryption_cipher] cipher does not provide forward secrecy.",
 		    ([ "_circuit_encryption_cipher": t ]));
 		QUIT
 	    }

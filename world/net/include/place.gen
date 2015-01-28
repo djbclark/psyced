@@ -502,6 +502,9 @@ enter(source, mc, data, vars) {
 	if (!((objectp(source) &&
 		// should use trustworthy level 9 instead? if so.. how?
 	       (query_ip_number(source) == "127.0.0.1"
+#  ifdef SECURE_IP_NUMBER
+	     || SECURE_IP_NUMBER(query_ip_number(source))
+#  endif
 	     || query_ip_number(source) == __HOST_IP_NUMBER__ ))
 #  if __EFUN_DEFINED__(tls_query_connection_state)
 		// psyc client.. may also one day be a psyc server, in that
