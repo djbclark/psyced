@@ -164,6 +164,9 @@ _failure_unsuccessful_delivery_timeout_dialback
 _failure_unsuccessful_delivery_resolve
 |## happens almost as frequently and users don't care to know
 
+_failure_unsuccessful_delivery_disconnect
+|## happens
+
 _failure_unsuccessful_delivery_repeated
 |## do users want to know the complete truth about federation?
 
