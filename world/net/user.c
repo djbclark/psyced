@@ -1572,13 +1572,22 @@ logon() {
 	string evil;
 
 	if (tls_query_connection_state(ME) == 1) {
-	    if (evil = tls_bad_cipher(ME, t)) {
-		// i bet jabber users will love this
+	    // evil TLS ciphers are no problem if the connection is being
+	    // tunneled through SSH or Tor, so we shut up in that case.
+	    if (probably_private(ME) < PRIVACY_REASONABLE &&
+		    (evil = tls_bad_cipher(ME, t))) {
+		// Seems to affect only pidgin for linux prior to 2015
                 w("_warning_circuit_encryption_cipher", 0, ([ "_circuit_encryption_cipher": evil ]));
 		//return remove_interactive(ME);
 	    } else {
                 unless (beQuiet) w("_status_circuit_encryption_cipher");
 	    }
+	} else if (!probably_private(ME)) {
+	    w("_warning_missing_circuit_encryption"
+# ifdef _warning_missing_circuit_encryption
+	      , _warning_missing_circuit_encryption
+# endif
+	    );
 	}
 #endif
 	// cannot if (greeting) here this since jabber:iq:auth depends on this

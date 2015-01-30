@@ -487,8 +487,9 @@ enter(source, mc, data, vars) {
 	}
 # endif
 # if defined(SECURE)
-// let people in who are either connected via a SSL/TLS
-// protocol or are coming from the localhost (probably SSH users).
+// let people in who are either connected via an MITM-prone TLS
+// protocol or are coming from the reasonably safe localhost
+// (either SSH or Tor users).
 //
 // both cases are no absolute guarantee for safety.. it is still
 // in the hands of each user in the room to safeguard true secrecy
@@ -497,27 +498,14 @@ enter(source, mc, data, vars) {
 // or belong to a certain group, so you have to use the respective
 // #defines to also ensure that, if that's what you want.
 //
-// -lynX 2004
-
-	if (!((objectp(source) &&
-		// should use trustworthy level 9 instead? if so.. how?
-	       (query_ip_number(source) == "127.0.0.1"
-#  ifdef SECURE_IP_NUMBER
-	     || SECURE_IP_NUMBER(query_ip_number(source))
-#  endif
-	     || query_ip_number(source) == __HOST_IP_NUMBER__ ))
-#  if __EFUN_DEFINED__(tls_query_connection_state)
+// -lynX 2004, updated 2015
+//
+	int intimacy = probably_private(source);
 		// psyc client.. may also one day be a psyc server, in that
 		// case we have to hope the rest of the link is secured, too
-	     || (objectp(vars["_INTERNAL_origin"]) 
-		 && interactive(vars["_INTERNAL_origin"]) 
-		 && tls_query_connection_state(vars["_INTERNAL_origin"]))
-		// tls connection, be it telnet irc jabber or https
-		// shouldn't this check happen before "_INTERNAL_origin"? -lynX
-	     || (objectp(source) && interactive(source)
-		 && tls_query_connection_state(source))
-#  endif
-	    )) {
+	if (intimacy == PRIVACY_UNKNOWN)
+	    intimacy = probably_private(vars["_INTERNAL_origin"]);
+	if (intimacy <= PRIVACY_SURVEILLED) {
 		sendmsg(source, "_error_place_enter_necessary_encryption",
 	"[_nick_place] may only be accessed by clients with enabled encryption.",
                     ([ "_nick_place" : qName() ]) );

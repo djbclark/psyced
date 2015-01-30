@@ -1,6 +1,9 @@
 <PSYC:TEXTDB> ## vim:syntax=mail
 ## tradotto al 30% ... cerca /TODO/ per continuare
 
+_warning_missing_circuit_encryption
+|La tua connessione non è crittata. Stai mettendo a rischio la privacy di altre persone!
+
 _status_circuit_encryption_cipher
 |Muy bueno! La tua connessione è crittata con forward secrecy.
 

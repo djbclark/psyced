@@ -186,3 +186,44 @@ string tls_bad_cipher(object sock, string scheme) {
     return 0;
 }
 
+// Do not use server technologies like psyced for strong
+// privacy or anonymity requirements. Get started using
+// distributed technologies instead. Check out:
+//	http://youbroketheinternet.org
+//	http://secushare.org
+// But if you're happy with half-baked security, here you
+// have it:
+//					-lynX 2015
+//
+int probably_private(object source) {
+	// object has no TCP to it. you have to ask its circuit.
+	unless (objectp(source) && interactive(source))
+	    return PRIVACY_UNKNOWN;
+	// should use trustworthy level 9 instead? if so.. how?
+	if (query_ip_number(source) == "127.0.0.1"
+		// query_ip_number() efun is faster than a local 
+		// LPC variable, so it is fine we call it often
+             || query_ip_number(source) == __HOST_IP_NUMBER__
+#  ifdef SECURE_IP_NUMBER
+             || SECURE_IP_NUMBER(query_ip_number(source))
+#  endif
+	// People coming from localhost have either made it
+	// through SSH's reasonable certificate pinning or
+	// Tor's public-key based addressing.. both provide
+	// reasonable protection from men in the middle, if
+	// only the server itself could be considered secure.
+	//
+	) return PRIVACY_REASONABLE;
+#  if __EFUN_DEFINED__(tls_query_connection_state)
+	// Alas, this person is using a TLS/SSL-enhanced
+	// access protocol which, unless the client implements
+	// certificate pinning, is susceptible to man in the
+	// middle attacks. Find out more on this topic on
+	// http://patrol.psyced.org
+	//
+        if (tls_query_connection_state(source))
+	    return PRIVACY_MITMX509;
+#  endif
+	return PRIVACY_SURVEILLED;
+}
+

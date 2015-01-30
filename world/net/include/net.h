@@ -276,4 +276,9 @@
 # endif
 #endif
 
+#define PRIVACY_SURVEILLED	 0
+#define PRIVACY_UNKNOWN  	-1
+#define PRIVACY_MITMX509	23
+#define PRIVACY_REASONABLE	44
+
 #endif

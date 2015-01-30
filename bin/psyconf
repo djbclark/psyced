@@ -511,10 +511,10 @@ then
     git stash save 'changes stashed automatically by psyced -m'
     git merge -s resolve origin
     # restore local changes?
-#   git stash apply
+#   git stash pop
     echo ""
     echo "If you had local changes to your files you can now restore them using"
-    echo "${hi}git stash apply${lo}"
+    echo "${hi}git stash pop${lo}"
     exit
 fi
 

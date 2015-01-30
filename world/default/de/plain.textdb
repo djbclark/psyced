@@ -4,6 +4,9 @@
 _warning_server_shutdown_temporary
 |Serverneustart: [_reason]
 
+_warning_missing_circuit_encryption
+|Deine Verbindung ist nicht verschlüsselt. Du gefährdest die Privatsphäre anderer Personen!
+
 _status_circuit_encryption_cipher
 |Gratuliere! Deine Verbindung ist mit forward secrecy verschlüsselt ([_circuit_encryption_cipher]).
 

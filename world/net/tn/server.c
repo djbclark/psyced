@@ -8,16 +8,25 @@
 
 qScheme() { return "tn"; }
 
-logon() {
-	// first check limits and authlocal, then show banner
-	if (::logon()) {
-//		unless (nick) {
-			cat(TELNET_PATH "clear.vt");
-			cat("/local/banner.txt");
-//		}
+human(x) {
+	x = lower_case(x);
+	unless (abbrev(x, "yes") || abbrev(x, "ja") || abbrev(x, "si") || abbrev(x, "zes")) {
+		emit("\nSorry, no other species welcome currently.\n\n");
+	}
+		// now check limits
+	else if (::logon()) {
 		// takes a little tweaking to use T() here
 		emit("Name: ");
 	}
+}
+
+logon() {
+	if (nick) return ::logon(); // authlocal
+	cat(TELNET_PATH "clear.vt");
+	cat("/local/banner.txt");
+	input_to(#'human, INPUT_IGNORE_BANG);
+	// takes a little tweaking to use T() here
+	emit("Are you human? ");
 }
 
 password(a) {
@@ -67,7 +76,7 @@ hello(ni) {
 //
 // only the PROMUVE will need this, as the freemuve isn't accepting "." and
 // ":" in nicknames anyways (PROMUVE converts those to "_").
-#ifdef PRO_PATH
+#if 0 //def PRO_PATH
 # if 0
 	{ int i1, i2, i3, i4, i5;
 	    if (strstr(ni, "://") > 0 ||
@@ -83,7 +92,8 @@ hello(ni) {
 		return 1;
 	}
 # else
-	if (abbrev("GET ", ni) || abbrev("POST ", ni)
+	// we could simply disallow space in the name here...
+	if (abbrev("GET ", ni) || abbrev("POST ", ni) || abbrev("OPTIONS ", ni)
 			       || abbrev("CONNECT ", ni)) {
 		// hehe.. we could htredirect proxyscanners to our www port   ;)
 		emit("Dumbhead.\n<h1>Don't you have a telnet client?</h1>\n");
@@ -95,7 +105,7 @@ hello(ni) {
 	return ::hello(ni);
 }
 
-#ifdef BRAIN
+#if 0 //def BRAIN
 morph() {
        if (user->isNewbie())
 	   emit("\nSorry, no unregistered users currently.\n\n");
