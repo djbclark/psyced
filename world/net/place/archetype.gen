@@ -2056,6 +2056,10 @@ showStatus(verbosity, al, person, mc, data, vars) {
 		    	([ "_identification": identification,
 #ifdef IRC_PATH
 			   "_identification_alias":
+# ifdef ONION_HOST
+			     "http://"+ ONION_HOST +"/"+ pathName() +" "+
+			     "irc://"+ ONION_HOST +"/"+ MYNICK +" "+
+# endif
 # if HAS_PORT(HTTP_PORT, HTTP_PATH) || HAS_PORT(HTTPS_PORT, HTTP_PATH)
 #  ifdef PRO_PATH
 			       ((tls_available() && HTTPS_URL) || HTTP_URL)
@@ -2075,7 +2079,12 @@ showStatus(verbosity, al, person, mc, data, vars) {
 			     "xmpp:*"+ MYLOWERNICK +"@"+ SERVER_HOST +" "+
 #  endif
 # endif
-			     "irc://"+ SERVER_HOST +"/"+ MYNICK,
+# ifdef __TLS__
+			     "ircs://"
+# else
+			     "irc://"
+# endif
+				+ SERVER_HOST +"/"+ MYNICK,
 #endif
 #ifdef JABBER_PATH
 			   "_identification_scheme_XMPP":

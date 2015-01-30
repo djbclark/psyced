@@ -493,7 +493,7 @@ _PAGES_help_access
 |This server accepts
 |<a target=_top class=top href="http://internet.relay.pages.de/">IRC</a> client
 |protocol on the IRC port 6667.
-|Try this <a href="irc://{_VAR_server}">link</a>.
+|Try this <a href="ircs://{_VAR_server}">link</a>.
 |You shall find <a href="http://www.psyced.org/psyc-irc.en.html"
 |>Getting started using IRC with psyced</a> helpful to understand
 |how different PSYC is from IRC.

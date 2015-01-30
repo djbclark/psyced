@@ -369,7 +369,7 @@ _PAGES_help_access
 |Wie sich der <b>psyced</b> als IRC-Server verhält wird in der
 |<a href="http://www.psyced.org/psyc-irc.de.html">Hilfestellung zum
 |IRC-Zugang</a> genauer beschrieben.
-|Eventuell funktioniert dieser <a href="irc://{_VAR_server}">Link</a>.
+|Eventuell funktioniert dieser <a href="ircs://{_VAR_server}">Link</a>.
 |
 |</dd><dt><P><a name="telnet"><B> Telnet </B></a></p></dt><dd>
 |Rudimentär aber immernoch ausreichend: Mit einem telnet-Programm wie

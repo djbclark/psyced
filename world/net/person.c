@@ -299,7 +299,16 @@ qDescription(source, vars, profile, itsme) {
 		     "xmpp:"+ MYLOWERNICK +"@"+ SERVER_HOST +" "+
 #  endif
 # endif
-		     "irc://"+ SERVER_HOST +"/~"+ MYNICK,
+# ifdef ONION_HOST
+		     "irc://"+ ONION_HOST +"/~"+ MYNICK,
+# else
+#  ifdef __TLS__
+		     "ircs://"
+#  else
+		     "irc://"
+#  endif
+		     + SERVER_HOST +"/~"+ MYNICK,
+# endif
 #endif
 #ifdef JABBER_PATH
 		"_identification_scheme_XMPP":
