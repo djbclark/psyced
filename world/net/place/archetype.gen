@@ -2468,7 +2468,7 @@ _request_history(source, mc, data, vars, b) {
 #  endif
 # endif
 	logView(vars["_match"] || vars["_parameter"] || vars["_amount"],
-	    source);
+	    source, 0, vars["_offset"]);
 	sendmsg(source, "_echo_history"); // indicate end of history
 	return 1;
 }
