@@ -22,7 +22,7 @@
 #else
 # define AUTODETECT 0
 # ifdef SPYC_PATH
-#  echo PSYC 1.0 will not work: libpsyc is not enabled in driver.
+#  echo libpsyc is not enabled in driver. Using old protocol parser instead.
 # endif
 #endif
 
