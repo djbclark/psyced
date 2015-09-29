@@ -2056,9 +2056,11 @@ showStatus(verbosity, al, person, mc, data, vars) {
 		    	([ "_identification": identification,
 #ifdef IRC_PATH
 			   "_identification_alias":
-# ifdef ONION_HOST
-			     "http://"+ ONION_HOST +"/"+ pathName() +" "+
-			     "irc://"+ ONION_HOST +"/"+ MYNICK +" "+
+# ifdef ONION_HTTP
+			     ONION_HTTP +"/"+ pathName() +" "+
+# endif
+# ifdef ONION_IRC
+			     ONION_IRC +"/"+ MYNICK +" "+
 # endif
 # if HAS_PORT(HTTP_PORT, HTTP_PATH) || HAS_PORT(HTTPS_PORT, HTTP_PATH)
 #  ifdef PRO_PATH

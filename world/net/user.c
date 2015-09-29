@@ -1652,29 +1652,23 @@ autojoin() {
 	// a community-esq feature
 	vSet("place", DEFPLACE);
 # endif
-	P2(("autojoin with %O %O %O\n", v("place"), place, places))
+	P2(("autojoin with %O %O places=%O\n", v("place"), place, places))
 	// see also http://about.psyc.eu/Client_coders#Room_members
+
+	// checking sizeof(places) is unsafe.. exiting with /bye
+	// doesn't always clean them all out (FIXME?) which means
+	// that a new login may fail on rejoining subscriptions!
+	// i fix this by enforcing the foreach on subscriptions
+	// but there may be better fixes on earth.. then again,
+	// this is how irc's autojoin() has been doing it all the
+	// time.. so we should rather refactor that? then again
+	// the IRC clients really seem to need it differently.
+	// --lynX 2015
+	//
+#if 0
 	if (sizeof(places)) {
-#if 0
-		if (v("scheme") != "irc" && v("scheme") != "psyc" &&
-		    v("scheme") != "jabber") {
-			// ouch.. this has to be a notice! TODO!
-			sendmsg(place, "_status_person_present_netburp",
-			"[_nick] turns alive again.", ([
-				 "_nick" : MYNICK ]) );
-#if 0
-			// fake it - use _echo_place_enter_relinked?
-			// this message should only be displayed for IRC users
-			// well, psyc clients need it too..
-			foreach (o, s : places) 
-				msg(o, "_echo_place_enter_relinked", 
-				    "You reenter [_nick_place] after interruption.",
-				  ([ "_nick_place" : s,
-				     "_source_relay" : ME ]));
-#endif
-		} else {
-#endif
 			foreach (o, s : places) {
+				P3(("%O relinking %O\n", ME, o))
 # ifdef FORCE_PLACE_RESET
 // we could have a v("leaveonreconnect") instead of an ifdef for this
 				placeRequest(o,
@@ -1685,7 +1679,6 @@ autojoin() {
 #  endif
                                      "_netburp", 0, 1);
 # else
-				P2(("%O relinking %O\n", ME, o))
 				placeRequest(o,
 #  ifdef SPEC
                                      "_request_context_enter"
@@ -1697,7 +1690,9 @@ autojoin() {
 			}
 //		}
 	}
-	else {
+	else
+#endif
+       	{
 # ifndef _flag_disable_place_default
 		unless (v("place"))
 		  vSet("place", T("_MISC_defplace", DEFPLACE));

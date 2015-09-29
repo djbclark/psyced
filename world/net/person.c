@@ -299,8 +299,8 @@ qDescription(source, vars, profile, itsme) {
 		     "xmpp:"+ MYLOWERNICK +"@"+ SERVER_HOST +" "+
 #  endif
 # endif
-# ifdef ONION_HOST
-		     "irc://"+ ONION_HOST +"/~"+ MYNICK,
+# ifdef ONION_IRC
+		     ONION_IRC +"/~"+ MYNICK,
 # else
 #  ifdef __TLS__
 		     "ircs://"
