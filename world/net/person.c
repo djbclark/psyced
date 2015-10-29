@@ -528,6 +528,7 @@ static linkSet(service, location, source) {
 	unless (location) location = source;
 	else unless (source) unless (source = location)
 	    raise_error("You have to provide either source or location!\n");
+	ASSERT("linkSet", v("locations"), v("locations"))
 	if (member(v("locations"), service)) {
 	    v("locations")[service] += ([ location ]);
 	} else {
@@ -574,6 +575,17 @@ linkDel(service, source, variant) {
 	string mc = "_notice_unlink";
 	service = service || 0;
 
+#if 0 // PARANOID ?
+	unless(mappingp(v("locations"))) {
+		// how the hell did i get here with a broken mapping?
+		monitor_report("_warning_abuse_invalid_locations_unlink",
+		    S("Broken locations[] in %O (with %O from %O:%O)\n",
+			ME, mc, source, service));
+		vSet("locations", ([]));
+	}
+#else
+	ASSERT("linkDel", v("locations"), v("locations"))
+#endif
 	unless (member(v("locations"), service)) {
 		P4(("linkDel(%O, %O) called in %O: no such candidate!\n",
 		    service, source, ME));
@@ -593,7 +605,8 @@ linkDel(service, source, variant) {
 	    // maybe actual deletion would need to be delayed after
 	    // letting locations know. they might still be sending
 	    // stuff to us, right?
-	    m_delete(v("locations")[service], candidate);
+	    if (mappingp(v("locations")[service]))  // why is this check necessary?
+		m_delete(v("locations")[service], candidate);
 	    unless (sizeof(v("locations")[service]))
 		m_delete(v("locations"), service);
 	    if (variant) mc += variant;
@@ -611,6 +624,7 @@ linkDel(service, source, variant) {
 static linkCleanUp(variant) {
 	mixed type, loc;
 
+	ASSERT("linkCleanUp", v("locations"), v("locations"))
 	foreach (type, loc : v("locations")) {
 		P2(("linkCleanUp(%O) to %O's ex-%O-client %O\n",
 		    variant, ME, type, loc))
@@ -1866,7 +1880,7 @@ case "_request_presence":
 #if 1 // PARANOID ?
 		unless(mappingp(v("locations"))) {
 			// how the hell did i get here with a broken mapping?
-			monitor_report("_warning_abuse_invalid_friend",
+			monitor_report("_warning_abuse_invalid_locations_friend",
 			    S("Broken locations[] in %O (with %O from %O:%O)\n",
 				ME, mc, source, profile));
 			vSet("locations", ([]));
