@@ -30,10 +30,6 @@ ________________________________________________________________________
 	ERQ could not resolve "symlynX".
 	(it tries to resolve the irc:nick)
 
-- psyced's memory of places joined is weird -- and neither the default
-  place from psyced.ini, nor the autojoin rooms in the irc client seem
-  to make a difference
-
 - "invalid context" errors happen where local rooms send _context
   as string uniform while local users expect the object pointer. huh?
 
@@ -3938,3 +3934,10 @@ edit.i	now renamed into render.i because it renders psyc packets
 === 201105 ============================================================
 net/spyc net/psyc
 	tg added support for libpsyc aka PSYC syntax according to spec!
+=== 2013, 2014 ========================================================
+	various "onion" mods to support Tor hidden services
+	psyc federation over tor would however require further work
+	(and still doesn't address the many problems of federation)
+=== 201509 ============================================================
+-	fixed autojoin bug for psyc, telnet and webchat users
+

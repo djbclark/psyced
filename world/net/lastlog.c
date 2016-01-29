@@ -82,7 +82,7 @@ logClip(maxlen, cutlen) {
 // TODO: logView *since* timestamp. see also user.c:disconnected()
 //
 // uh. vim lpc syntax file doesn't like default in variablenames. renamed.
-logView(a, showingLog, defAmount) {
+logView(a, showingLog, defAmount, offset) {
 	string grep;
 	int i, ll;
 
@@ -141,6 +141,9 @@ logView(a, showingLog, defAmount) {
 	P4(("\n%O :logView: %O\n", ME, _log))
 	unless (ll) ll = defAmount || 15;
 	ll *= 4;
+	/* FIXME: here's where the _offset parameter needs to be considered
+	 *	  but let's see if ryuka is serious about wanting to use this  ;)
+	 */
 	if (sizeof(_log) < ll) {
 		ll = sizeof(_log);
 		i = 0;
