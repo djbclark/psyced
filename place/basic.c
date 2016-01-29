@@ -81,7 +81,11 @@ sys64764() {
 	});
 }
  
-#define puts(string) castmsg(ME, "_notice_application_basic", string, ([]))
+#if 0
+# define puts(string) castmsg(ME, "_notice_application_basic", string, ([]))
+#else
+# define puts(string) call_out(#'castmsg, 2*(delay++), ME, "_notice_application_basic", string, ([]))
+#endif
 #define tell(user,string) sendmsg(user,"_notice_application_basic",string,([]))
 
 sys64738(source) {
@@ -92,6 +96,7 @@ sys64738(source) {
 
 sys42336(source, mc, data, mapping vars) {
 	string t;
+	int delay = random(4);
 
 	if (stringp(data)) {
 		sscanf(data, "%s %s", data, t);

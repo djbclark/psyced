@@ -9,6 +9,7 @@
 
 #define NAME	"CryptoChat"
 #define SECURE
+#define PRIVATE
 
 // should work like this, but there's a bug to fix here...
 // when trying to call https://psyced.org:33333/@cryptochat

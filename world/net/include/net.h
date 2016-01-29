@@ -224,6 +224,7 @@
 # define PERSISTENT_MASTERS
 # define NEW_RENDER
 # define MUCSUC
+# define XMPP_BIDI
 #endif
 #define GAMMA   // code that has left BETA and is in production use
 
@@ -236,7 +237,6 @@
 #endif
 
 #ifdef EXPERIMENTAL
-# define XMPP_BIDI
 # define USE_AUTOALIAS
 	// fippo's brilliant single-user channel emulation for jabber MUCs
 	// unfortunately it provides no advantages over the old method, yet.
