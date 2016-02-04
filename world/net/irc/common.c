@@ -158,11 +158,7 @@ render(string mc, string data, mapping vars, mixed source) {
 	mixed t;
 
 	P3(("common:render %O %O\n", ME, data));
-#if 1 // def IRCEXPERIMENTAL
 	template = T(mc, 0); // enable textdb inheritance
-#else
-	template = T(mc, ""); 
-#endif
 #ifndef _flag_disable_stamp_time_IRC
 	t = vars["_time_place"] || vars["_time_log"];
 	// this goes thru ->v()

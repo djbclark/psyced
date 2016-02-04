@@ -205,6 +205,7 @@ summon(layout, lang, scheme) {
 
 lookup(string mc, mixed fmt, object ghost, object curse) {
 	string file, in;
+	mixed ofmt = fmt;
 #ifdef NOTEXTCACHE
 	int dont_cache = 0;
 #endif /* NOTEXTCACHE */
@@ -328,6 +329,9 @@ lookup(string mc, mixed fmt, object ghost, object curse) {
 				break;
 			case "VAR_server_uniform":
 				in = before + SERVER_UNIFORM + after;
+				break;
+			case "VAR_data": // not sure if this makes sense, --lynX 2016
+				in = before + ofmt + after;
 				break;
 			case "VAR_method":
 				PT(("using %O for %O\n", mc, code))

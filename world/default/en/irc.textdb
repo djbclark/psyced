@@ -132,9 +132,15 @@ _error_status_place_matches
 |##
 |## NOTICE * :Du bist doch schon da!
 
+_error_place_enter_necessary_invitation
+|##define ERR_BADCHANNELKEY   "475"
+|#475 [_INTERNAL_nick_me] #[_nick_place] :{_error_place_enter_necessary_invitation}
+
 _error_place_enter
 |## 471 is ERR_CHANISFULL
-|#471 [_INTERNAL_nick_me] #[_nick_place] :Error entering [_nick_place].
+|#471 [_INTERNAL_nick_me] #[_nick_place] :{_VAR_data}
+|## was: Error entering [_nick_place].
+|## would love to put [_data] or {_method} in there, but do they work the way i mean it?
 
 _query_password
 |## Please provide your password. (If your client isn't able to, use /quote pass «your-password» (which does not work in irssi) or use a syntax like /server {_VAR_server} «ircport» «your-password»)
