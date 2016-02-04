@@ -45,6 +45,10 @@ varargs string psyctext(string s, mapping m, vastring data,
 	case "_data":
 		r += p + (data || "");
 		break;
+	case "_data_psyctext":
+		if (data) data = psyctext(data, m, "", source, nick);
+		r += p + (data || "");
+		break;
 	case "_nick":
 #if 1 //def USE_THE_NICK
 		r += p + (nick || m["_nick"] || "?");

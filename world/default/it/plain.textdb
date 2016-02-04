@@ -695,10 +695,10 @@ _failure_invalid_place_membership
 |[_nick_place] kann sich an nichts erinnern. Macht aber nichts.
 
 _message_announcement
-|[_nick] schreit: [_data]
+|[_nick] urla: [_data]
 
 _message_private
-|[_nick] sagt Dir: [_data]
+|[_nick] ti dice: [_data]
 
 _message_public
 |[_nick] {_TEXT_action_says}: [_data]
@@ -743,43 +743,43 @@ _message_public_action_possessive
 |[_nick]s [_action_possessive].
 
 _message_public_action_reduce
-|[_nick] tut was.
+|[_nick] fa qualcosa.
 
 _message_behaviour_warning
-|*** Warnung: [_data] ***
+|*** Avvertimento comportamentale: [_data] ***
 
 _message_behaviour_punishment
-|*** [_data]. Und tschüß. ***
+|*** [_data]. E ti saluto. ***
 
 _message_behaviour_warning_default
-|*** Benimm dich oder du fliegst raus! ***
+|*** Comportati in modo educato o ti dobbiamo cacciare! ***
 
 _message_behaviour_punishment_default
 |
 
 _message_private_annotate
-|Anmerkung von [_nick]: [_data]
+|Annotazione di [_nick]: [_data]
 
 _message_private_action
 |[_nick] [_action].
 
 _message_private_ask
-|[_nick] fragt Dich: [_data]
+|[_nick] ti chiede: [_data]
 
 _message_private_action_reduce
-|[_nick] tut Dir was.
+|[_nick] ti fa qualcosa.
 
 _notice_login
 |benvenuto nel mondo PSYC, [_nick]. (http://www.psyc.eu)
 
 _notice_invitation
-|[_nick] lädt Dich nach [_nick_place] ein.
+|[_nick] ti invita in [_nick_place].
 
 _notice_link
-|Verbindung zu [_source] hergestellt.
+|Creata connessione a [_source].
 
 _notice_link_topic
-|Verbindung zu [_source] hergestellt. [_topic]
+|Creata connessione a [_source]. [_topic]
 
 _notice_news_software
 |Dies ist eine neue Version der Server-Software: [_version]
