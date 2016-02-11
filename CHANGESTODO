@@ -7,43 +7,53 @@ vim:nosmarttab:syntax=diff
 | This file is mostly being used by lynX. The public bug tracker for psyced
 | resides at https://projects.tgbit.net/projects/psyced/ and contains the
 | same stuff in a more multiuser accessible fashion.
+|
+| Then again, no. psyced is in low maintenance mode since it roughly
+| does what it should and we need a distributed communication system
+| such as secushare.org anyway.
 ________________________________________________________________________
-== SERIOUS!!! ==========================================================
+== NUISANCES worth fixing, possibly ====================================
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-- MUC im arsch
-- fix /part behaviour
-- Ungültige Route nach psyc://psyced.org im psyc://psyced.org/~lynx Context festgestellt.
+- offline messages not being output (which *can* work even with OTR!)
+     <<< did i fix that recently?
 
+- xmpp friendships for local xmpp clients (see /show in and out)
+
+- we should add warnings about browsers that arent mozilla compatible but claim to be
+     <<< did i recently fix that with browsercap?
+
++ clean-up and release the historic webchat code
+	(in case you wondered what browsercap is.. it's there)
+
+== XMPP MUC MOSTLY BROKEN ==============================================
+
+    * XMTUX sagt: and these scratchboard-messages and the "going down" messages are sent by this "special user", too
+    * why do these messags have the type "chat" and not "groupchat"?
+    * <message from='*welcome@psyced.org/psyc://psyced.org:51024d/' to='[censored-recipient]' type='groupchat'> <- this is a snippet of the xml that was just sent by psyced
+    * while the other messages are sent with Â¿<message from='*welcome@psyced.org' to='[censored-recipient]/Home' type='chat'>)
+    * XMTUX: zu eurer info, es scheint irgendwie mÃ¶glich zu sein, nachrichten vom muc selbst kommen zu lassen, d.h. sowas wie Â¿<message from='room@server.com' to='user@server.de/Home' type='groupchat'> funktioniert... (damit kÃ¶nnte man diese ganzen nachrichten, die jetzt au?erhalb des muc oder von einem komischen user erscheinen schÃ¶n in den raum machen)
+
+- remote psycers do not always show up properly via jabber client + MUC
+* see also older notes below on "MUC"
+________________________________________________________________________
+== desperate, but not serious ==========================================
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 - check in user:input() if data is in utf8 (using RE_UTF8) in order to produce
   proper error messages before it is processed further and may end up in
   net/jabber's emit() where it is dropped silently (see CHARS_XMPP.log)
 
-- make polly use oauth
-
-- remote psycers do not always show up properly via jabber client + MUC
-
-- /m freenode:symlynx hey
-    Sorry, _message_private is not supported by the IRC gateway.
-  huh? wasn't that once the point to make them? debug...
-
-- msg from irc to remote psyc user doesn't work:
-	ERQ could not resolve "symlynX".
-	(it tries to resolve the irc:nick)
-
+SAME BUG?
+- Ungültige Route nach psyc://psyced.org im psyc://psyced.org/~lynx Context festgestellt.
 - "invalid context" errors happen where local rooms send _context
   as string uniform while local users expect the object pointer. huh?
 
 LPC
-- large submissions into scratchpad can crash the driver
-- configure script fails on libidn now being in glibc
-- buffer stuff in erq
+- large submissions into scratchpad can crash the driver (disable http?)
+- unsafe buffer operations in erq (annoying but harmless)
 ________________________________________________________________________
-== NEXT RELEASE ========================================================
+== considered important long time ago ==================================
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-+ active certs: have data/host/psyc.host.name.pem contain tls cert
-  for this host, so when that file exists psyced automatically tries
-  a tls_init_connection() when psyc-connecting that host and checks if
-  the certificate is still correct. it also does on incoming tls.
+- fix /PART behaviour... what is wrong with it?
 
 - net/jabber reissues unnecessary friend() requests whenever a user simply
   reorganizes friends into other roster groups
@@ -58,8 +68,6 @@ ________________________________________________________________________
 - autorefetch twitter isnt working
   http/fetch is too complicated. throw out the queue and callback logic. kiss!
 
-? support tls multiplexing on all suitable ports
-
 ? bugs in psyced install procedure
 
 - pointless to keep gentoo files in this git, if they can't be updated
@@ -68,7 +76,7 @@ ________________________________________________________________________
 + teach net/smtp to trust localhost etc.
 + teach net/smtp to ask recipient object if spam rules are to be applied
 ________________________________________________________________________
-== currently being inspected ===========================================
+== forever being inspected =============================================
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 - https://psyced.org/~lynX should use web browser language, not mine
 
@@ -89,9 +97,6 @@ ________________________________________________________________________
   templates and removing _nick vars. during this tradition we keep the
   USE_THE_NICK code running. several "invite issues" should be solved once
   nicks are gone.
-
-- psyced.org tells me: Ungültige Route nach psyc://psyced.org
-    im psyc://psyced.org/~lynx Context festgestellt.
 
 ? who's gonna clean up the mess of having too many websites ?
 
@@ -1555,6 +1560,14 @@ ________________________________________________________________________
   channels we can simply create a channel of all except a few and do
   not need anybody's permission to do so. ok forget this. just documenting
   this here and poof forget it again.
+
+== IDEAS from the long gone TLS era ====================================
+
++ active certs: have data/host/psyc.host.name.pem contain tls cert
+  for this host, so when that file exists psyced automatically tries
+  a tls_init_connection() when psyc-connecting that host and checks if
+  the certificate is still correct. it also does on incoming tls.
+  (later people called this technique 'CERTIFICATE PINNING')
 
 == PSYC CLIENTS ========================================================
 - tg runs into trouble using _do_enter and _do_leave. apparently the enter-echo
@@ -3940,4 +3953,13 @@ net/spyc net/psyc
 	(and still doesn't address the many problems of federation)
 === 201509 ============================================================
 -	fixed autojoin bug for psyc, telnet and webchat users
+=== 201510 ============================================================
+-	assert mapping during unlink (triggered by old .o file)
+=== 201601 ============================================================
++	looks like it is a good idea to activate XMPP_BIDI by default
+-	folklore: fixed the output order of messages in place/basic
+=== 201602 ============================================================
++	irc: introducing _data_psyctext as a way to output the proper
+	psyced error message to IRC clients when failing to enter
+	a channel with restrictions like obligatory encryption
 
