@@ -1,6 +1,9 @@
 <PSYC:TEXTDB> ## vim:syntax=mail
 ## tradotto al 30% ... cerca /TODO/ per continuare
 
+_error_missing_circuit_encryption
+|La tua connessione ha smesso di essere crittata. Controlla la tua configurazione.
+
 _warning_missing_circuit_encryption
 |La tua connessione non è crittata. Stai mettendo a rischio la privacy di altre persone!
 

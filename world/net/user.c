@@ -28,6 +28,7 @@ volatile mixed query;
 volatile mapping tags;
 volatile int showEcho;
 volatile mixed beQuiet;
+volatile int encrypted = 0;
 
 // my nickspace. used by psyctext(). could be passed as closure, but then
 // it wouldn't be available for *any* psyctext call in user objects.
@@ -1572,6 +1573,7 @@ logon() {
 	string evil;
 
 	if (tls_query_connection_state(ME) == 1) {
+	    encrypted++;
 	    // evil TLS ciphers are no problem if the connection is being
 	    // tunneled through SSH or Tor, so we shut up in that case.
 	    if (probably_private(ME) < PRIVACY_REASONABLE &&
@@ -1583,11 +1585,22 @@ logon() {
                 unless (beQuiet) w("_status_circuit_encryption_cipher");
 	    }
 	} else if (!probably_private(ME)) {
-	    w("_warning_missing_circuit_encryption"
-# ifdef _warning_missing_circuit_encryption
-	      , _warning_missing_circuit_encryption
+	    if (encrypted) {
+		// do not allow a person to (be) downgrade(d) from TLS...
+		// at least not during the lifetime of this object
+		w("_error_missing_circuit_encryption"
+# ifdef _error_missing_circuit_encryption
+		  , _error_missing_circuit_encryption
 # endif
-	    );
+		);
+		return remove_interactive(ME);
+	    } else {
+		w("_warning_missing_circuit_encryption"
+# ifdef _warning_missing_circuit_encryption
+		  , _warning_missing_circuit_encryption
+# endif
+		);
+	    }
 	}
 #endif
 	// cannot if (greeting) here this since jabber:iq:auth depends on this

@@ -1,6 +1,9 @@
 <PSYC:TEXTDB> ## vim:syntax=mail
 ## Check utf-8: Praise Atatürk!
 
+_error_missing_circuit_encryption
+|Your connection has downgraded from being encrypted. Please fix your configuration.
+
 _warning_missing_circuit_encryption
 |Your connection is not encrypted. You are putting other people's privacy at risk!
 
