@@ -4,6 +4,9 @@
 _warning_server_shutdown_temporary
 |Serverneustart: [_reason]
 
+_error_missing_circuit_encryption
+|Deine Verbindung ist plötzlich nicht mehr verschlüsselt. Bitte kontrolliere Deine Konfiguration.
+
 _warning_missing_circuit_encryption
 |Deine Verbindung ist nicht verschlüsselt. Du gefährdest die Privatsphäre anderer Personen!
 

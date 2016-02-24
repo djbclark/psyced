@@ -217,7 +217,7 @@ void receive_udp(string host, string msg, int port) {
 	if (strlen(msg) > 1 && msg[1] == '\n') switch(msg[0]) {
 #ifdef SPYC_PATH
 # if !__EFUN_DEFINED__(psyc_parse)
-#  echo New PSYC syntax will not work: Driver compiled without libpsyc!
+#  echo libpsyc is not enabled in driver. Using old protocol parser instead.
 # else
 	case '|':
 		unless (spycd) {
