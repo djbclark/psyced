@@ -239,7 +239,7 @@ _echo_save
 |[_amount_lines] messaggi salvati.
 
 _echo_set
-|impostazione [_key_set] ora ha il valore "[_value]".
+|impostazione [_key] ora ha il valore "[_value]".
 
 _echo_invitation
 |[_nick_target] invitato a [_nick_place].
@@ -257,10 +257,10 @@ _echo_log_last
 |rivisti gli ultimi %d messaggi.
 
 _echo_set_none
-|okay. cancellato l'impostazione [_key_set].
+|okay. cancellato l'impostazione [_key].
 
 _echo_set_default
-|l'impostazione [_key_set] riconfigurata al valore standard.
+|l'impostazione [_key] riconfigurata al valore standard.
 
 _echo_set_password
 |molto bene, hai una nuova password.
@@ -405,10 +405,10 @@ _info_commands
 |manuali ed aiuti al sito <{_URL_help}>.
 
 _info_set
-|l'impostazione [_key_set] ha il valore "[_value]".
+|l'impostazione [_key] ha il valore "[_value]".
 
 _info_set_none
-|l'impostazione [_key_set] è vuota.
+|l'impostazione [_key] è vuota.
 
 _info_talk
 |
@@ -543,7 +543,7 @@ _error_closed_server
 |mi spiace, il server è chiuso a quest'ora.
 
 _error_unknown_setting
-|l'impostazione "[_key_set]" non esiste.
+|l'impostazione "[_key]" non esiste.
 
 _error_unknown_name_user
 |"[_nick_target]" non è raggiungibile al momento.
@@ -632,7 +632,7 @@ _error_invalid_input_speed
 |ehi! vai troppo di fretta! ignorato "%s".
 
 _error_invalid_setting_value
-|l'impostazione [_key_set] non può prendere questo valore.
+|l'impostazione [_key] non può prendere questo valore.
 
 _error_invalid_setting_name
 |puoi solo cambiare le lettere dal minuscolo al maiuscolo e vice versa.
