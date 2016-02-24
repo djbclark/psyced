@@ -44,18 +44,36 @@ use File::Spec;
 #    }
 #}
 
+sub debug() { 0 }
+
 # append something while testing
 #my $test = "-NEW";
-use Data::Dumper;
+#use Data::Dumper;
 
 sub say {
 	print join('', @_); # if $test;
 }
 
+sub sys {
+	print join(' ', @_), "\n" if debug;
+	if (system(@_)) {
+		if ($? == -1) {
+			print "\t{failed to execute: $!}\n";
+		} elsif ($? & 127) {
+			printf "\t{command died with sig %d, %s core dump}\n",
+			 ($? & 127),  ($? & 128) ? 'with' : 'without';
+		} else {
+			printf "\t{command exited with value %d}\n", $? >> 8;
+		}
+		exit $? if $?;
+		exit $@ if $@;
+	}
+}
 
 	### MAIN ###
 	# if you are manually compiling an ldmud, rename it or change here.
 	my $driver = 'psyclpc';
+	my $newbie = 0;
 
 	use Getopt::Std;
 	&getopt;
@@ -166,8 +184,26 @@ X
 		         $c{_basic_host_name} || 'psyced';
 	$chatname = 'psyced' if $chatname eq 'psyc';
 
-#	say "Generating control files in $c{_basic_path_base} ..\n\n";
-	my $t = "$base/local/ports.h$test";
+	my $t = "$base/local";
+	unless (-w $t) {
+		$newbie = 1;
+		say <<X;
+
+Welcome new installer!
+Copying (just this time) default configuration into $t ..
+X
+		sys("/bin/cp", "-rp", "$base/config/blueprint", $t);
+	}
+	$t = "$base/data";
+	mkdir($t) unless -w $t;
+	$t = "$base/data/person";
+	mkdir($t) unless -w $t;
+	$t = "$base/data/place";
+	mkdir($t) unless -w $t;
+	$t = "$base/log";
+	mkdir($t) unless -w $t;
+
+	$t = "$base/local/ports.h$test";
 	say "Generating control file $t ..\n";
 	rename $t, "$t~";
 	open O, '>', $t or die "Cannot write to $t";
@@ -549,6 +585,7 @@ X
 		print O "\t\$commandline\n";
 	} else {
 		say "The file $sandbox/log/psyced.out will contain the runtime output.\n";
+		say "The file $sandbox/log/psyced.err will contain error messages.\n";
 		print O <<X;
 	touch $sandbox/log/psyced.out $sandbox/log/psyced.err
 	$domv $sandbox/log/psyced.err $sandbox/log/psyced.err-old
@@ -581,9 +618,9 @@ X
 
 # PSYCED INIT.D SCRIPT
 	$t = "$base/etc";
-	mkdir($t);
+	mkdir($t) unless -w $t;
 	$t .= "/init.d";
-	mkdir($t);
+	mkdir($t) unless -w $t;
 	$t .= "/psyced$test";
 	say "Generating control file $t ..\n";
 	rename $t, "$t~";
@@ -675,13 +712,13 @@ X
 
 # TORRC
 	$t = "$base/etc/tor";
-	mkdir($t);
+	mkdir($t) unless -w $t;
 	$t = "$base/var";
-	mkdir($t);
+	mkdir($t) unless -w $t;
 	$t = "$base/var/tor";
-	mkdir($t);
+	mkdir($t) unless -w $t;
 	$t = "$base/etc/tor/torrc";
-	say "Generating Tor configuration $t ..\n";
+	say "Generating optional Tor configuration $t ..\n";
 	rename $t, "$t~";
 	open O, '>', $t or die "Cannot write to $t";
 
@@ -822,7 +859,9 @@ X
 
 ## end of former archetype.pl
 
-	say "\nCaution: You may have to completely shut down and restart psyced\n";
-	say "to ensure the newly generated start-up scripts are actually used.\n";
+	unless ($newbie) {
+	    say "\nCaution: You may have to completely shut down and restart psyced\n";
+	    say "to ensure the newly generated start-up scripts are actually used.\n";
+	}
 
 # vim:ts=8

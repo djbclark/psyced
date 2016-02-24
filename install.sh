@@ -192,12 +192,12 @@ if ! test `ls -1 ${driver}-*tar.${zip} 2>/dev/null`
     then
         if wget "${lpcbaseurl}/${driver}-${driverver}.tar.${zip}"
         then
-                echo "${driver} successfully retrieved."
-                else
-        echo "${hi}ATTENTION: Unable to download ${driver}"
-        echo "${hi}ATTENTION: ${lo}You have no ${driver}-*.tar.${zip} in this directory."
-        echo "Please obtain one from http://lpc.psyc.eu."
-        $exit
+	    echo "${driver} successfully retrieved."
+	else
+	    echo "${hi}ATTENTION: Unable to download ${driver}"
+	    echo "${hi}ATTENTION: ${lo}You have no ${driver}-*.tar.${zip} in this directory."
+	    echo "Please obtain one from http://lpc.psyc.eu."
+	    $exit
         fi
     else
 if test -d .git
