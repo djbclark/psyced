@@ -1578,9 +1578,8 @@ cmd(a, args, dest, command) {
 Commands: go, me, who, p(eople), bye.\n" MYTEMP,
 			    ([ "_nick": MYLOWERNICK, "_command": a,
 			       "_page_help" : t ]) );
-		else w("_info_commands", "\
-Commands: tell, talk, go, me, [_nick], who, p(eople), log, reply, greet, bye.\n"
-		    MYTEMP, ([ "_nick": MYLOWERNICK, "_command": a,
+		else w("_info_commands", 0,
+			    ([ "_nick": MYLOWERNICK, "_command": a,
 			       "_page_help" : t ]) );
 		break;
 # else

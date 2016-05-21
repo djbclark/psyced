@@ -469,7 +469,7 @@ _echo_friendship_removed
 |Freundschaft mit [_nick_target] gekündigt.
 
 _info_commands
-|Befehle: tell, reply, go, me, [_nick], who, p(eople), log.
+|Befehle: t(ell), talk, go, me, [_nick], who, p(eople), log, r(eply), g(reet), bye.
 |{_URL_help} bietet Hilfe.
 
 _info_set

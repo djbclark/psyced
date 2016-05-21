@@ -279,6 +279,14 @@ case "/oauth":
 		      T("_HTML_tail", "</td></tr></table></center></body>"));
 		quit();
 		return 1;
+	    } else if (abbrev("/.well-known/", item)) {
+		P0(("ACME domain ownership check %O\n", item))
+		if (file_size(item) > 0) {
+		    http_ok(prot, "application/x-letsencrypt-acme", 0);
+		    binary_message(read_file(item));
+		    quit();
+		    return 1;
+		}
 	    }
     }
 
