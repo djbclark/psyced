@@ -729,7 +729,6 @@ X
 
 ControlSocket $base/var/tor/.control
 DataDirectory $base/var/tor
-TransPort 9040
 SocksPort 9050
 DNSPort 9053
 AutomapHostsOnResolve 1
