@@ -679,7 +679,6 @@ case "\$1" in
 		rm $sandbox/data/$driver.pid && echo "OK"
 	else 
 		echo -n "Killing psyced brutally ... "
-		kill -1 \`cat $sandbox/data/$driver.pid\` >/dev/null 2>&1
 		kill -3 \`cat $sandbox/data/psyced.pid\` && echo "OK"
 	fi
 	;;
@@ -729,9 +728,15 @@ X
 
 ControlSocket $base/var/tor/.control
 DataDirectory $base/var/tor
+AutomapHostsOnResolve 1
 SocksPort 9050
 DNSPort 9053
-AutomapHostsOnResolve 1
+
+# If your tor executable does not support this feature,
+# .onion domain names will not 'resolve' like normal ones.
+TransPort 9040
+# See also the iptables call in the init script.
+# Both are not fundamentally necesseary, you can remove them.
 
 HiddenServiceDir $base/etc/tor/.onion
 X
