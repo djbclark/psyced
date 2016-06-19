@@ -714,6 +714,10 @@ _failure_exceeded_limit_users
 _failure_unsupported_execute_person
 |Sorry, [_nick] hasn't defined any commands for you.
 
+_info_commands
+|Commands: t(ell), talk, go, me, [_nick], who, p(eople), log, r(eply), g(reet), bye.
+|Help and manuals available at <{_URL_help}>.
+
 _info_location
 |[_nick] has location [_location].
 

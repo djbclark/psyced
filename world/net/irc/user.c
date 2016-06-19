@@ -1189,8 +1189,9 @@ static privmsg(args, text, req) {
 	string person,room;
 	mixed t;
 
-	unless (stringp(text) && strlen(text)) return;
-
+	unless (stringp(text) && strlen(text)) {
+		unless (sscanf(args, "%s %s", args, text)) return;
+	}
 #ifdef GAMMA
 	// fippoism typing indicator.. but shouldn't it *do* something
 	// after detecting this CTCP-like "typing" flag hack?

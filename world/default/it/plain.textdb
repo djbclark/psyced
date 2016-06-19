@@ -404,7 +404,7 @@ _echo_friendship_removed
 |rimossa l'amicizia con [_nick_target].
 
 _info_commands
-|comandi base: tell, reply, go, me, [_nick], who, p(eople), log.
+|comandi: t(ell), talk, go, me, [_nick], who, p(eople), log, r(eply), g(reet), bye.
 |manuali ed aiuti al sito <{_URL_help}>.
 
 _info_set
