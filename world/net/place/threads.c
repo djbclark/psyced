@@ -74,8 +74,8 @@ varargs array(mixed) entries(int limit, int offset, int reverse, int parent, int
 	if (vars["_parent"] != parent) continue;
 	if (o++ < offset) continue;
 	children = ({});
-	if (member(vars, "_children")) {
-	    foreach (int c : vars["_children"]) {
+	if (member(vars, "_INTERNAL_children")) {
+	    foreach (int c : vars["_INTERNAL_children"]) {
 		if (child = logPick(c)) {
 		    children += ({ child + ({ entries(0, 0, reverse, c) }) });
 		}
@@ -104,15 +104,21 @@ varargs int addEntry(mixed source, mapping vars, string _data, string _mc) {
     vars["_id"] = logSize();
     vars["_action"] ||= v("addaction");
     // this should only be set after a reply
-    m_delete(vars, "_children");
+    m_delete(vars, "_INTERNAL_children");
 
     if (vars["_parent"]) {
 	array(mixed) parent;
 	vars["_parent"] = to_int(vars["_parent"]);
 	unless (parent = logPick(vars["_parent"])) return 0;
 	PT((">>> parent: %O\n",  parent))
-	unless (parent[LOG_VARS]["_children"]) parent[LOG_VARS]["_children"] = ({ });
-	parent[LOG_VARS]["_children"] += ({ vars["_id"] });
+
+	// the children array is generated *in* the state of a
+	// previously sent message. this modification must never be
+	// transmitted in a history replay or suchlike, that's why
+	// it has to be tagged _INTERNAL.
+	//
+	unless (parent[LOG_VARS]["_INTERNAL_children"]) parent[LOG_VARS]["_INTERNAL_children"] = ({ });
+	parent[LOG_VARS]["_INTERNAL_children"] += ({ vars["_id"] });
 
 	mc += "_reply";
 	data = member(parent[LOG_VARS], "_title") ?
@@ -147,7 +153,7 @@ int editEntry(mixed source, mapping vars, string data)  {
 
     if (strlen(data)) entry[LOG_DATA] = data;
     foreach (string key : vars)
-	if (key != "_children") entry[LOG_VARS][key] = vars[key];
+	if (key != "_INTERNAL_children") entry[LOG_VARS][key] = vars[key];
 
     save();
     castmsg(source, entry[LOG_MC] + "_edit", entry[LOG_DATA], vars + ([ "_action": v("editaction") ]));

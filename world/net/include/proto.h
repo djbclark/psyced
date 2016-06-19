@@ -18,6 +18,7 @@ varargs object find_person(string name, vaint lowercazed);
 #ifndef hex2int
 int hex2int(string hex);
 #endif
+int is_localhost(string host);
 varargs string isotime(mixed ctim, int long);
 int legal_host(string ip, int port, string scheme, int udpflag);
 #ifdef varargs
