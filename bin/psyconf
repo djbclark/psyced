@@ -736,7 +736,7 @@ DNSPort 9053
 # .onion domain names will not 'resolve' like normal ones.
 TransPort 9040
 # See also the iptables call in the init script.
-# Both are not fundamentally necesseary, you can remove them.
+# Both are not fundamentally necessary, you can remove them.
 
 HiddenServiceDir $base/etc/tor/.onion
 X
