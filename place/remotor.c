@@ -6,17 +6,17 @@
 #ifdef ADMINISTRATORS
 # define	PLACE_OWNED	ADMINISTRATORS
 #else
-# echo place/syslog has no owners!
+# echo place/remotor has no owners!
 #endif
 
 #define NAME	"remoTor"
 #define PRIVATE
 #define SECURE
-#define RESTRICTED
+//#define RESTRICTED
 
 #define PLACE_HISTORY_EXPORT
 #define HISTORY_GLIMPSE 7
-#define HISTORY_METHOD  "_notice_tor"
+#define HISTORY_METHOD  "_warning_remotor"
 
 #ifdef BRAIN
 # define ALLOW_EXTERNAL_FROM	"psyc://psyced.org"
