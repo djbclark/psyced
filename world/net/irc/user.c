@@ -1190,6 +1190,12 @@ static privmsg(args, text, req) {
 	mixed t;
 
 	unless (stringp(text) && strlen(text)) {
+		// somewhere in the IRC RFC it is permissible to
+		// send messages without a colon if they only
+		// contain one word. fifteen years after this code
+		// was originally written we encounter the first
+		// case of a client that actually makes use of
+		// that. it's called "Circe".
 		unless (sscanf(args, "%s %s", args, text)) return;
 	}
 #ifdef GAMMA
