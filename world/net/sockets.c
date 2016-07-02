@@ -18,6 +18,19 @@
 //#define NO_INHERIT	// virtual ain't workin' .. but leavin it out neither
 #include <text.h>
 
+// similar logic in probably_private()
+static string safetypin(object o, string ip) {
+	return !interactive(o) ? "-" :
+#ifdef SECURE_IP_NUMBER
+	         SECURE_IP_NUMBER(ip) ? "*" :
+#endif
+		 is_localhost(ip) ? "=" :
+#if __EFUN_DEFINED__(tls_query_connection_state)
+		 tls_query_connection_state(o) ? "+" :
+#endif
+		 " ";
+}
+
 static int smaller_object_name(object a, object b) {
 	return object_name(a) < object_name(b);
 }
@@ -64,17 +77,10 @@ list_sockets(guy, flags) {
 			if (boss(o)) name += "*";
 			if (uv["visibility"] == "off") name = "°"+name;
 			list += sprintf(T("_list_user_technical_person",
-			  "\n%4.4s%s %s %s %s (%s) <%s> %s"),
-//				scheme ? (layout && scheme=="ht" ?
-//					  layout : scheme) : "-",
+			  "\n%s%4.4s %s %s %s (%s) <%s> %s"),
+				safetypin(o, ip),
 				(scheme == "ht" ? (layout || scheme)
 					: scheme) || "",
-#if __EFUN_DEFINED__(tls_query_connection_state)
-				interactive(o) &&
-				  tls_query_connection_state(o) ? "!" : " ",
-#else
-				" ",
-#endif
 				idle ? ((stringp(idle) ?
 				     idle : to_string(idle))) : "",
 				name || "???",
@@ -92,20 +98,12 @@ list_sockets(guy, flags) {
 		    if (name? flags & SOCKET_LIST_GHOST : flags & SOCKET_LIST_LINK)
 			list += sprintf(T("_list_user_technical_ghost",
 			  "\n%s %s %O %s (%s) %s %s"),
-#if __EFUN_DEFINED__(tls_query_connection_state)
-			    interactive(o) && 
-			      tls_query_connection_state(o) ? "!" : " ",
-#else
-			    " ",
-#endif
+			    safetypin(o, query_ip_number(o)),
 			    (name && to_string(name)) || "",
 			    o,
-#if 1 //def _flag_log_hosts	// realtime inspection isn't logging
 			    query_ip_name(o) || "",
 			    query_ip_number(o) || "",
-#else
                             "", "",
-#endif
 #if __EFUN_DEFINED__(tls_query_connection_info)
 			    tls ? intp(tls[TLS_PROT]) ?
 				 TLS_PROT_NAME(tls[TLS_PROT]) ||
