@@ -42,13 +42,6 @@ logon(failure) {
 	return rc;
 }
 
-disconnect(remainder) {
-	// we typically just want to give it one more try
-	reconnect();
-	// the reconnect in circuit.c will do certain amount of retries only
-        return 0;   // unexpected
-}
-
 msg(source, mc, data, mapping vars, showingLog, target) {
 	string t, ni, mca;
 
@@ -82,12 +75,20 @@ msg(source, mc, data, mapping vars, showingLog, target) {
 	render(mca, data, vars, source);
 	return 1;
 #else
-	if (abbrev("_message_public", mc))
-	    return emit(data + "\n");
+	if (abbrev("_message_public", mc)) {
+		// FIXME: should we handle the disconnect instead?
+		if (data == "quit") return 1;
+		return emit(data + "\n");
+	}
 #endif
 }
 
 #if 0
+
+disconnected(remaining) {
+	// circuit code would destruct this object
+	return NET_PATH "connect"::disconnected(remaining);
+}
 
 render(string mc, string data, mapping vars, mixed source) {
         string template, output;
@@ -99,47 +100,6 @@ render(string mc, string data, mapping vars, mixed source) {
         if (!output || output=="") return D2(D("tn/out: empty output\n"));
 	if (template == "") output += "\n";
 	emit(output);
-}
-
-cmd(a, args, b, source, vars) {
-	string t;
-
-	// extra room commands for operators of the gateway
-	if (b > 0) switch(a) {
-	case "disc":
-		return disc();
-	}
-	return ::cmd(a, args, b, source, vars);
-}
-
-showStatus(verbosity, al, person, mc, data, vars) {
-	if (names && namesfrom) sendmsg(person, "_status_place_members_IRC",
-	     "irc://[_server_IRC]/[_nick_place_IRC] contains: [_members_IRC]",
-		    ([  "_members_IRC": names,
-		       //"_source_IRC": "irc://"+namesfrom+"/"+namesto
-		         "_server_IRC": namesfrom,
-		     "_nick_place_IRC": namesto ]));
-	return ::showStatus(verbosity, al, person, mc, data, vars);
-}
-
-reboot(reason, restart, pass) {
-	emit("QUIT :Service "+ (restart ? "restart" : "shutdown")
-	     +": "+ reason +"\n");
-	return ::reboot(reason, restart, pass);
-}
-
-static disc() {
-	emit("QUIT :Service temporarily disabled\n");
-	return 1;
-}
-
-onEnter(source, mc, data, vars) {
-	if (interactive(ME)) tellChannel(source, mc, vars, data);
-	return ::onEnter(source, mc, data, vars);
-}
-leave(source, mc, data, vars) {
-	if (interactive(ME)) tellChannel(source, mc, vars, data);
-	return ::leave(source, mc, data, vars);
 }
 
 #endif
