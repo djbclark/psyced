@@ -177,6 +177,10 @@ inherit NET_PATH "place/intercept";
 # endif
 #endif
 
+#ifdef CONNECT_TELNET
+inherit NET_PATH "tn/outgoing";
+#endif
+
 #ifdef FETCH_TEXTDB
 volatile object feed, tob;
 
@@ -368,6 +372,9 @@ void create() {
 #endif
 #ifdef CONNECT_IRC
 	link(CONNECT_IRC);
+#endif
+#ifdef CONNECT_TELNET
+	link(CONNECT_TELNET);
 #endif
 #if defined(NEWSFEED_RSS) && defined(DEVELOPMENT)
 	// do not connect newsfeeds immediately if running in production mode
