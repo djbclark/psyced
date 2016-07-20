@@ -41,7 +41,7 @@ parse(all) {
 #ifdef _flag_log_sockets_telnet_outgoing
 	log_file("RAW_TN_OUT", "%O < %O\n", ME, all);
 #endif
-	iconv(all, "ASCII//TRANSLIT", SYSTEM_CHARSET);
+	if (all && all != "") iconv(all, "ASCII//TRANSLIT", SYSTEM_CHARSET);
 	if (owner) sendmsg(owner,
 	     "_notice_telnet_verbatim", "[_text_verbatim]",
 	    ([ "_text_verbatim": all ]));

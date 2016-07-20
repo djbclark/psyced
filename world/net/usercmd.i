@@ -1414,14 +1414,6 @@ cmd(a, args, dest, command) {
 		w("_echo_save", "[_amount_lines] lines of log saved.",
 			(["_amount_lines": t]));
 		break;
-#ifdef MUDLINK
-	case "mud":
-		unless (objectp(mudlink) && interactive(mudlink)) mudlink(v("mudlink"));
-		// nicer UI using simulated query with $mud TBD.. FIXME
-		// also, this send() is not doing the translit!?!!
-		if (objectp(mudlink)) mudlink -> send(ARGS(1) +"\n");
-		break;
-#endif // MUDLINK
 #endif /* USER_PROGRAM */
 	default:
 #ifdef USER_PROGRAM
@@ -2040,6 +2032,13 @@ tell(pal, what, palo, how, mc, tv) {
 		return;
 	}
 #endif
+#ifdef MUDLINK
+	if (pal == "$mud") {
+		unless (objectp(mudlink) && interactive(mudlink)) mudlink(v("mudlink"));
+		if (objectp(mudlink)) mudlink -> send(what +"\n");
+		return;
+	}
+#endif // MUDLINK
 #ifdef ALIASES
         // this also allows for /alias MEP MunichElectropunk
        deaPal = aliases[lower_case(pal)] || pal;
