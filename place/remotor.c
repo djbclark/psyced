@@ -10,13 +10,14 @@
 #endif
 
 #define NAME	"remoTor"
-#define PRIVATE
+//#define PRIVATE
 #define SECURE
+#define SILENT
 //#define RESTRICTED
 
 #define PLACE_HISTORY_EXPORT
 #define HISTORY_GLIMPSE 7
-#define HISTORY_METHOD  "_warning_remotor"
+#define HISTORY_METHOD  "_notice"
 
 #ifdef BRAIN
 # define ALLOW_EXTERNAL_FROM	"psyc://psyced.org"

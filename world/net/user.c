@@ -758,6 +758,7 @@ case "_message_echo_private":
 		}
 		return 0; // dont walk into _message_public if !pal
 #else
+		if (!objectp(source)) vars["_nick_target"] = nick; //FIXME BETTER
 		break;
 #endif
 case "_message_public_question":
