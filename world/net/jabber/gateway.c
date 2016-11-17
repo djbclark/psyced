@@ -145,7 +145,8 @@ verify_connection(string to, string from, string type) {
 	sAuthenticated(from);
 #ifdef XMPP_BIDI
 	if (bidi) {
-		P0(("doing register target for xmpp bidi!!!!\n"))
+		P0(("doing register target for xmpp bidi (2)!!!!\n"))
+		P0(("register_target(XMPP + %O)\n", from))
 		register_target(XMPP + from);
 	}
 #endif
@@ -423,7 +424,8 @@ jabberMsg(XMLNode node) {
 		    while (remove_call_out(#'quit) != -1);
 #ifdef XMPP_BIDI
 		    if (bidi) {
-			    P0(("doing register target for xmpp bidi!!!!\n"))
+			    P0(("doing register target for xmpp bidi (1)!!!!\n"))
+			    P0(("register_target(XMPP + %O)\n", t))
 			    register_target(XMPP + t);
 		    }
 #endif

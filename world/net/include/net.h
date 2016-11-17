@@ -224,7 +224,7 @@
 # define PERSISTENT_MASTERS
 # define NEW_RENDER
 # define MUCSUC
-# define XMPP_BIDI
+//# define XMPP_BIDI
 #endif
 #define GAMMA   // code that has left BETA and is in production use
 
