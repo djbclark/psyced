@@ -65,7 +65,7 @@ logon(failure) {
 	int rc = ::logon(failure);
 	unless (rc) return 0;
 	next_input_to(#'parse);
-	parse("[connected]");	// hack to maintain logon ascii graphics intact
+	parse("<connected>");	// hack to maintain logon ascii graphics intact
 				// could have queued this instead:
 	if (connectstring) call_out(#'send, 1, connectstring);
 	call_out(#'runQ, 3);	// deliver the queue of messages in circuit.c

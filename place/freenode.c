@@ -12,8 +12,8 @@
 
 #ifdef BRAIN
 # echo BRAIN: connecting to freenode IRC server
-//# define CONNECT_IRC	"irc." NAME ".net"
-# define CONNECT_IRC	"calvino.freenode.net"
+# define CONNECT_IRC	"irc." NAME ".net"
+//# define CONNECT_IRC	"calvino.freenode.net"
 //# define CHAT_CHANNEL	"esp"
 //# define CHAT_CHANNEL	"23c3"
 # define PASS_IRC	IRCGATE_FREENODE

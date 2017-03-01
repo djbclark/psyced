@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 ### -I/opt/psyced/utility
 # the include path would help finding INI.pm, but what if you the user
 # have decided to install psyced elsewhere?

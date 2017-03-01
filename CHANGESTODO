@@ -1853,9 +1853,9 @@ see also: http://about.psyc.eu/SPAM
    evtl nicht alle im richtigen channel, um den enter zu sehen..)
 
 == IRC ISSUES 1.0 ======================================================
-- according to rfc and ircd source IRC parser should accept when the last
-  argument is just a word instead of a phrase prefixed by :
-  this is unusual, but legal:  "PRIVMSG #blah hello"
+- when using +follow instead of /join, the current place is stored and
+  an autojoin is performed on next login. we should abolish the concept
+  of "current place" for irc clients, i guess.
 
 + some irc clients do not implement their own pinging, and some NATs really
   kill your irc session if it is too quiet too long. we need optional server
@@ -3953,7 +3953,28 @@ net/spyc net/psyc
 +	looks like it is a good idea to activate XMPP_BIDI by default
 -	folklore: fixed the output order of messages in place/basic
 === 201602 ============================================================
+-	disallow people to expose private data by crypto downgrade
 +	irc: introducing _data_psyctext as a way to output the proper
 	psyced error message to IRC clients when failing to enter
 	a channel with restrictions like obligatory encryption
-
++	more advanced psyconf
+=== 201605 ============================================================
++	support for ACME aka letsencrypt
++	gentoo ebuilds have moved into youbroketheinternet overlay
+=== 201606 ============================================================
+-	according to rfc and ircd source IRC parser should accept when 
+	the last argument is just a word instead of a phrase prefixed by :
+	this is unusual, but legal:  "PRIVMSG #blah hello" (thx defanor)
+	-> fixed in a68a84b9248ac3865d98c86397df3d4451905f61
+=== 201607 ============================================================
++	integration of textual MUD gaming by /set mudlink and /talk $mud
++	demonstration of outgoing TCP from chatrooms with the @nemesis
+	place that connects to the Nemesis MUD
++	properly display onion-protected incoming connections
+	in /tcp and /lu
+-	minor fix in @remotor for users of the Tor remote control tool
+=== 2016xx ============================================================
++	improve resistance against anti-ethical business models:
+	future changes to psyced are subject to Affero GPL
++	recognize gnunet-exit as secure transport
+=== 2017xx ============================================================
